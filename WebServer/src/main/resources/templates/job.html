@@ -1,0 +1,566 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>JobGo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="uikit/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+    <!-- Edit CSS -->
+    <link href="css/default.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/p-loading.min.css" />
+	
+    <!-- Font Awesome -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,900,700,600,300,200" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700" rel="stylesheet">
+    
+    <!--=== Load JS here for greater good ====-->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="uikit/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap.min.js"></script>
+    <script src="js/chart-master/Chart.js"></script>
+    <script type="text/javascript" src="js/p-loading.min.js"></script>
+    
+	<style>
+		.jumbotron {
+			background: url('images/header8.jpg') no-repeat center center;
+			background-size: cover;
+			color: white;
+			width: 100%;
+			text-shadow: #444 0 1px 1px;
+		}
+
+		#example {
+			width:100%;
+			text-align:center;
+		}
+		
+		#example th{
+			text-align: center;
+		}
+		
+		#example td{
+			vertical-align: middle;
+		}
+		
+		.noticing{
+			color: #48cfad;
+		}
+	</style>
+</head>
+
+<script th:inline="javascript">
+	var searchText = [[${searchText}]]
+	var searchCompId = [[${compId}]]
+	
+	var chartBgColors = [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(340, 82, 59, 0.2)',
+        'rgba(26, 35, 126, 0.2)',
+        'rgba(191, 54, 12, 0.2)',
+        'rgba(69, 90, 100, 0.2)',
+        'rgba(0, 131, 143, 0.2)',
+        'rgba(118, 255, 3, 0.2)',
+        'rgba(0, 229, 255, 0.2)',
+        'rgba(48, 79, 254, 0.2)',
+        'rgba(205, 220, 57, 0.2)'
+    ];
+	var chartBorderColors = [
+		'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+        'rgba(340, 82, 59, 1)',
+        'rgba(26, 35, 126, 1)',
+        'rgba(191, 54, 12, 1)',
+        'rgba(69, 90, 100, 1)',
+        'rgba(0, 131, 143, 1)',
+        'rgba(118, 255, 3, 1)',
+        'rgba(0, 229, 255, 1)',
+        'rgba(48, 79, 254, 1)',
+        'rgba(205, 220, 57, 1)'
+	];
+</script>
+
+<script language="javascript" type="text/javascript">
+	function f_init(){
+		$('body').ploading({action: 'show'});
+		$('#example').DataTable({
+	        //ajax: "/searchJob?searchType=0&searchText="+searchText,
+	        ajax: {
+				type: "GET",
+				url: "/searchJob?searchType=0&searchText="+searchText+"&compId="+searchCompId,
+				dataSrc: function (json) {
+					$('body').ploading({action: 'hide'});
+				    return json.data;
+				}       
+			},
+	        lengthMenu: [ 5, 10, 25, 50, 75, 100 ],
+	        pageLength: 10,
+	        responsive: true,
+	        autoWidth: false,
+	        drawCallback: function( settings ) {
+	        	$('[data-toggle="tooltip"]').tooltip();
+	        	$('#example tbody').off('click', '.show-desc-btn');
+	        	$('#example tbody').off('click', '.show-salary-btn');
+	        	$('#example tbody').off('click', '.show-interview-btn');
+	        	
+	        	$('#example tbody').on( 'click', '.show-desc-btn', function () {
+	        		var table = $('#example').DataTable();
+	        		var rowData = table.row( $(this).parents('tr') ).data();
+	        		f_showDescription(rowData);
+	        	});
+	        	
+	        	$('#example tbody').on( 'click', '.show-salary-btn', function () {
+	        		var table = $('#example').DataTable();
+	        		var rowData = table.row( $(this).parents('tr') ).data();
+	        		f_showSalary(rowData);
+	        	});
+	        	
+	        	$('#example tbody').on( 'click', '.show-interview-btn', function () {
+	        		var table = $('#example').DataTable();
+	        		var rowData = table.row( $(this).parents('tr') ).data();
+	        		f_showInterview(rowData);
+	        	});
+	        },
+	        order: [1, "asc"],
+	        columns: [
+	        	{ 
+	        		"data": "companyId",
+	        		responsivePriority: 0,
+	        		render: function ( data, type, row ) {
+	        	        return '<img src="images/company_logo/'+data.toLowerCase()+'.png" class="img-circle" height="64"/>';
+	        	    }
+	        	},
+	            {
+	        		"data": "title",
+	        		responsivePriority: 8,
+	        		"max-width": "25%",
+	        		render: function ( data, type, row ) {
+	        			//if (!!row.description){
+	        				return '<button type="button" class="btn btn-link show-desc-btn" style="font-size:16px" data-toggle="tooltip" data-placement="right" title="Click to View Job Description" >'+ data +'</button>';
+	        			//} else {
+	        			//	return data;
+	        			//}
+	        	    }
+	        	},
+	            {
+	        		"data": "companyId",
+	        		responsivePriority: 7,
+	        		render: function ( data, type, row ) {
+	        			return '<button type="button" class="btn btn-link" style="font-size:16px" data-toggle="tooltip" data-placement="right" title="Click to View Company Detail" onclick="f_viewCompany(\''+ data +'\');">'+ data +'</button>';
+	        	    }
+	        	},
+	            {
+	        		"data": "city",
+	        		responsivePriority: 6
+	        	},
+	            {
+	        		"data": "salaryNum",
+	        		responsivePriority: 3,
+	        		render: function ( data, type, row ) {
+	            		if (data != 0 && data != null) {
+	            			return '<button type="button" class="btn btn-primary btn-sm show-salary-btn" data-toggle="tooltip" data-placement="right" title="View Job Salary Stat">View</button>';
+	            		} else {
+	            			return 'N/A';
+	            		}
+	        	    }
+	        	},
+	            /* {
+	        		"data": "lowSalary",
+	        		responsivePriority: 2,
+	        		render: function ( data, type, row ) {
+	            		if (!!row.lowSalary && !! row.highSalary) {
+	            			return row.lowSalary + ' - ' + row.highSalary;
+	            			//return '<a href="#" class="btn btn-into btn-sm active" role="button">Primary link</a>';
+	            		} else {
+	            			return 'N/A';
+	            		}
+	        	    }
+	        	}, */
+	            {
+	            	"data": "interviewNum",
+	            	responsivePriority: 1,
+	            	render: function ( data, type, row ) {
+	            		if (!!row.interviewNum) {
+	            			return '<button type="button" class="btn btn-primary btn-sm show-interview-btn" data-toggle="tooltip" data-placement="right" title="Click to View Job Interviews">View&nbsp;<span class="badge">'+ row.interviewNum +'</span></button>';
+	            			//return '<a href="#" class="btn btn-into btn-sm active" role="button">Primary link</a>';
+	            		} else {
+	            			return 'N/A';
+	            		}
+	        	    }
+	            }
+	        ]
+	    });
+	}
+	
+	function f_showDescription(rowData){
+		$('#jobDescModalTitle').text(rowData.title);
+		$('#jobDescModalLocation').text(rowData.companyId + ', ' + rowData.city);
+		if (!!rowData.applyLink){
+			$('#jobDescModalApplyLink').show();
+			$('#jobDescModalApplyLink').unbind('click');
+			$('#jobDescModalApplyLink').click(function (){
+				window.open(rowData.applyLink);
+			});
+		} else {
+			$('#jobDescModalApplyLink').hide();
+			$('#jobDescModalApplyLink').unbind('click');
+		}
+		
+		$('body').ploading({action: 'show'});
+		$.ajax({
+			type: 'GET',
+			url: '/description',
+			data: {
+				compId: rowData.companyId,
+				jobId: rowData.jobId
+			},
+			success: function(ret) {
+				$('#jobDescModalContent').html(ret);
+				$('#jobDescModal').modal('show');
+			},
+			complete: function (xhr, ts){
+				$('body').ploading({action: 'hide'});
+			}
+	    });
+	}
+	
+	function f_showSalary(rowData){
+		$('body').ploading({action: 'show'});
+		$("#salaryChartContainer").children().remove();
+		var canvasHtml = '<canvas id="salaryChart" width="400" height="400"></canvas>'
+		$('#salaryChartContainer').append(canvasHtml);
+	    
+		$.ajax({
+			type: 'GET',
+			url: '/salary',
+			data: {
+				compId: rowData.companyId,
+				jobType: rowData.type
+			},
+			dataType: "json",
+			success: function(ret) {
+				if (!!ret && ret.avg!=0) {
+					$("#jobSalaryModalAvg").text(ret.avg);
+					$("#jobSalaryModalRange").text(ret.range);
+					
+					var labels = [];
+					var dataSet = [];
+					var avgDataSet = [];
+					var bgColors = [];
+					var borderColors = [];
+					for (var i=0; i<ret.salaryList.length; i++){
+						var salary = ret.salaryList[i];
+						labels.push(salary.jobTitle);
+						dataSet.push(salary.avgSalary);
+						avgDataSet.push(ret.avg);
+						
+						bgColors.push(chartBgColors[i % chartBgColors.length]);
+						borderColors.push(chartBorderColors[i % chartBorderColors.length]);
+					}
+					var salaryChart = new Chart($("#salaryChart"), {
+					    type: 'horizontalBar',
+					    data: {
+					        labels: labels,
+					        datasets: [
+					        	{
+						        	label: "Salary",
+						            data: dataSet,
+						            backgroundColor: bgColors,
+						            borderColor: borderColors,
+						            borderWidth: 1
+						        },
+						        {
+			                        label: "Average Salary",
+			                        type: "line",
+			                        fill: false,
+			                        pointStyle: "line",
+			                        data: avgDataSet
+			                    }
+					        ]
+					    },
+					    options: {
+					    	responsiveAnimationDuration: 1200,
+					    	maintainAspectRatio: false,
+					    	title: {
+					            display: true,
+					            text: ['Relative Job Salaries in '+ rowData.companyId, 'Key Word: '+ rowData.type +'']
+					        },
+					        legend: {
+					            display: false,
+					            labels: {
+					            	usePointStyle: true,
+						            filter: function(legendItem, chartData) {
+										return legendItem.datasetIndex === 1;
+						            }
+					            }
+					        },
+					        tooltips: {
+				        	    filter: function (tooltipItem) {
+				        	        return tooltipItem.datasetIndex === 0;
+				        	    }
+				        	},
+					        scales: {
+					        	xAxes: [{
+					        		barPercentage: 0.3,
+					        		ticks: {
+					                    //display: false,
+					                    fontSize: 9,
+					                    autoSkip: false,
+					                    callback: function(value, index, values) {
+					                    	return value;
+					                    	if (value.length <= 8){
+					                    		return value;
+					                    	} else {
+					                    		return value.substring(0, 8) + '...';
+					                    	}
+					                    }
+					                }
+					        	}],
+					            yAxes: [{
+					                ticks: {
+					                	fontSize: 9,
+					                    beginAtZero:true,
+					                    callback: function(value, index, values) {
+					                    	if (value.length <= 50){
+					                    		return value;
+					                    	} else {
+					                    		return value.substring(0, 50) + '...';
+					                    	}
+					                    }
+					                }
+					            }]
+					        }
+					    }
+					});
+					
+					$('#jobSalaryModalTitle').text(rowData.title);
+					$('#jobSalaryModal').modal('show');
+				}else {
+					$('#jobAlertModalTitle').text(rowData.title);
+					$("#jobAlertModal").modal('show');
+				}
+			},
+			complete: function (xhr, ts){
+				$('body').ploading({action: 'hide'});
+			}
+	    });
+	}
+	
+	function f_showInterview(rowData){
+		$('body').ploading({action: 'show'});
+		$.ajax({
+			type: 'GET',
+			url: '/interview',
+			data: {
+				compId: rowData.companyId,
+				jobId: rowData.jobId
+			},
+			dataType: "json",
+			success: function(ret) {
+				if (!!ret.data) {
+					$('#jobInterviewModalTimeline').children().remove();
+					for (var i=0; i<ret.data.length; i++){
+						var questionHTML = '<div class="activity-icon bg-recentactivity"><i class="fas fa-arrow-down"></i></div>'
+											+'<div class="activity-panel">'
+											+'<h5>'+ ret.data[i].date +'</h5>'
+											+'<p>' + ret.data[i].question + '</p>'
+										   +'</div>';
+					 	$('#jobInterviewModalTimeline').append(questionHTML);
+					}
+					$('#jobInterviewModalTitle').text(rowData.title);
+					$('#jobInterviewModal').modal('show');
+				}
+			},
+			complete: function (xhr, ts){
+				$('body').ploading({action: 'hide'});
+			}
+	    });
+		
+	}
+	
+	function f_viewCompany(compId){
+		window.location.href = '/company?compId=' + compId;
+	}
+	
+$(document).ready(f_init);
+</script>
+<body>
+	<header class="header8" id="home">
+	    <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+	        <div class="container">
+	        <div class="navbar-header">
+	            <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle" type="button">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	            </button>
+	            <a href="/index" class="navbar-brand brand"><i class="fab fa-sellsy"></i><span>Dior</span><span>SFU BigData</span></a>
+	        </div>
+	
+	        <div id="navbar-collapse-02" class="collapse navbar-collapse">
+	            <ul class="nav navbar-nav navbar-right">
+	                <li><a class="scroll" href="/index">Home</a></li>
+	                <li class="active"><a class="scroll" href="/job">Job</a></li>
+	                <li><a class="scroll" href="/company">Company</a></li>
+	                <li><a class="scroll" href="/analysis">Analysis</a></li>
+	            </ul>
+	        </div>
+	    </nav>
+	</header>
+	<div class="jumbotron" style="margin-top:70px;">
+		<div class="container">
+		  	<h2>Search Result For [[${searchText}]]: </h1>
+		  	<p>Find the job interests you most, then get it! —— See what help you can get from us.</p>
+		</div>
+    </div>
+	<div style="padding: 0 50px 50px 50px">
+		<table id="example" class="table table-striped table-bordered">
+			<thead>
+	            <tr>
+	            	<th></th>
+	                <th>Job Title</th>
+	                <th>Company</th>
+	                <th>Location</th>
+	                <th>Salary Stat</th>
+	                <th>Interview</th>
+	            </tr>
+	        </thead>
+	    </table>
+	</div>
+	<footer class="footer8">
+	    <div class="container">
+	        <div class="col-md-12">
+	            <p class="pull-left small">© Copyright - <a href="#">Mad</a> 2018</p>
+	        	<p class="pull-right small">Made with <i class="fa fa-heart"></i> in SFU Big Data</p>
+	        </div>
+	    </div>
+	</footer>
+	<!-- Modal -->
+	<div class="modal fade bs-example-modal-lg" id="jobDescModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<span class="modal-title">Job Description</span>
+				</div>
+				<div class="modal-body">
+					<h4 id="jobDescModalTitle">Job Title</h4>
+					<p id="jobDescModalLocation"></p>
+					<p id="jobDescModalSalaryRange"></p>
+					<button id="jobDescModalApplyLink" type="button" class="btn btn-info btn-xs">Apply For</button>
+					<hr>
+					<div id="jobDescModalContent">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade bs-example-modal-lg" id="jobSalaryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 id="jobSalaryModalTitle">Job Title</h4>
+					<span class="modal-title">Salary Statistic</span>
+				</div>
+				<div class="modal-body">
+					<div id="jobSalaryModalContent">
+						<div class="row centered">
+							<div class="col-md-6">
+								<h4 class="noticing">Average Salary</h4>
+								<p id="jobSalaryModalAvg">222</p>
+							</div>
+							<div class="col-md-6">
+								<h4 class="noticing">Salary Range</h4>
+								<p id="jobSalaryModalRange">222</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div id="salaryChartContainer" class="detailed mt" style="height: 700px">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade bs-example-modal-lg" id="jobAlertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 id="jobAlertModalTitle">Job Title</h4>
+					<span class="modal-title">Salary Statistic</span>
+				</div>
+				<div class="modal-body">
+					<div id="jobAlertModalContent">
+						<div class="row">
+							<div class="col-md-12 centered">
+								<h2 class="noticing">Ooops...</h2>
+								<h4>Cannot find any related salaries</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade bs-example-modal-lg" id="jobInterviewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 id="jobInterviewModalTitle">Job Title</h4>
+					<span class="modal-title">Interview Questions</span>
+				</div>
+				<div class="modal-body">
+					<div id="jobInterviewModalContent">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="detailed mt">
+									<div class="recent-activity" id="jobInterviewModalTimeline">
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

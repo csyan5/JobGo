@@ -1,0 +1,292 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Job Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="uikit/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+    <!-- Edit CSS -->
+    <link href="css/default.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,900,700,600,300,200" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700" rel="stylesheet">
+    
+       <!-- Custom styles for this template -->
+	<link href="css/style.css" rel="stylesheet">
+	<link href="css/style-responsive.css" rel="stylesheet">
+	
+    <!--=== Load JS here for greater good ====-->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="uikit/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap.min.js"></script>
+    <!-- js placed at the end of the document so the pages load faster -->
+	<script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+	<script src="js/jquery.scrollTo.min.js"></script>
+	<script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+	<!--common script for all pages-->
+	<script src="js/common-scripts.js"></script>
+	<script src="js/chart-master/Chart.bak.js"></script>
+	
+	<style>
+		.jumbotron {
+			background: url('images/header8.jpg') no-repeat center center;
+			background-size: cover;
+			color: white;
+			width: 100%;
+			text-shadow: #444 0 1px 1px;
+		}
+	</style>
+</head>
+<script>
+	function f_init(){
+		if ($(".custom-bar-chart")) {
+		  $(".bar").each(function() {
+		    var i = $(this).find(".value").html();
+		    $(this).find(".value").animate({
+		      height: i
+		    }, 1000)
+		  })
+		}
+	}
+	
+$(document).ready(f_init);
+</script>
+<body>
+	<header class="header8" id="home">
+	    <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+	        <div class="container">
+	        <div class="navbar-header">
+	            <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle" type="button">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	            </button>
+	            <a href="/index" class="navbar-brand brand"><i class="fab fa-sellsy"></i><span>Dior</span><span>SFU BigData</span></a>
+	        </div>
+	
+	        <div id="navbar-collapse-02" class="collapse navbar-collapse">
+	            <ul class="nav navbar-nav navbar-right">
+	                <li><a class="scroll" href="/index">Home</a></li>
+	                <li><a class="scroll" href="/job">Job</a></li>
+	                <li><a class="scroll" href="/company">Company</a></li>
+	                <li class="active"><a class="scroll" href="/analysis">Analysis</a></li>
+	            </ul>
+	        </div>
+	    </nav>
+	</header>
+	<div class="jumbotron" style="margin-top:70px;">
+		<div class="container">
+		  	<h2>Search Result For xxx: </h1>
+		  	<p>Find the job interests you most, then get it! —— See what help you can get from us.</p>
+		</div>
+    </div>
+	<section id="container">
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+    <section id="main-content">
+      <section class="wrapper">
+        <h3><i class="fa fa-angle-right"></i> Chartjs Charts</h3>
+        <!-- page start-->
+        <div class="custom-bar-chart">
+          <ul class="y-axis">
+            <li><span>10.000</span></li>
+            <li><span>8.000</span></li>
+            <li><span>6.000</span></li>
+            <li><span>4.000</span></li>
+            <li><span>2.000</span></li>
+            <li><span>0</span></li>
+          </ul>
+          <div class="bar">
+            <div class="title">JAN</div>
+            <div class="value tooltips" data-original-title="8.500" data-toggle="tooltip" data-placement="top">85%</div>
+          </div>
+          <div class="bar ">
+            <div class="title">FEB</div>
+            <div class="value tooltips" data-original-title="5.000" data-toggle="tooltip" data-placement="top">50%</div>
+          </div>
+          <div class="bar ">
+            <div class="title">MAR</div>
+            <div class="value tooltips" data-original-title="6.000" data-toggle="tooltip" data-placement="top">60%</div>
+          </div>
+          <div class="bar ">
+            <div class="title">APR</div>
+            <div class="value tooltips" data-original-title="4.500" data-toggle="tooltip" data-placement="top">45%</div>
+          </div>
+          <div class="bar">
+            <div class="title">MAY</div>
+            <div class="value tooltips" data-original-title="3.200" data-toggle="tooltip" data-placement="top">32%</div>
+          </div>
+          <div class="bar ">
+            <div class="title">JUN</div>
+            <div class="value tooltips" data-original-title="6.200" data-toggle="tooltip" data-placement="top">62%</div>
+          </div>
+          <div class="bar">
+            <div class="title">JUL</div>
+            <div class="value tooltips" data-original-title="7.500" data-toggle="tooltip" data-placement="top">75%</div>
+          </div>
+        </div>
+        <div class="row mt">
+          <!-- SERVER STATUS PANELS -->
+          <div class="col-md-4 col-sm-4 mb">
+            <div class="grey-panel pn donut-chart">
+              <div class="grey-header">
+                <h5>SERVER LOAD</h5>
+              </div>
+              <canvas id="serverstatus01" height="120" width="120"></canvas>
+              <script>
+                var doughnutData = [{
+                    value: 70,
+                    color: "#FF6B6B"
+                  },
+                  {
+                    value: 30,
+                    color: "#fdfdfd"
+                  }
+                ];
+                var myDoughnut = new Chart(document.getElementById("serverstatus01").getContext("2d")).Doughnut(doughnutData);
+              </script>
+              <div class="row">
+                <div class="col-sm-6 col-xs-6 goleft">
+                  <p>Usage<br/>Increase:</p>
+                </div>
+                <div class="col-sm-6 col-xs-6">
+                  <h2>21%</h2>
+                </div>
+              </div>
+            </div>
+            <!-- /grey-panel -->
+          </div>
+          <!-- /col-md-4-->
+          <div class="col-md-4 col-sm-4 mb">
+            <div class="darkblue-panel pn">
+              <div class="darkblue-header">
+                <h5>DROPBOX STATICS</h5>
+              </div>
+              <canvas id="serverstatus02" height="120" width="120"></canvas>
+              <script>
+                var doughnutData = [{
+                    value: 60,
+                    color: "#1c9ca7"
+                  },
+                  {
+                    value: 40,
+                    color: "#f68275"
+                  }
+                ];
+                var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
+              </script>
+              <p>April 17, 2014</p>
+              <footer>
+                <div class="pull-left">
+                  <h5><i class="fa fa-hdd-o"></i> 17 GB</h5>
+                </div>
+                <div class="pull-right">
+                  <h5>60% Used</h5>
+                </div>
+              </footer>
+            </div>
+            <!--  /darkblue panel -->
+          </div>
+          <!-- /col-md-4 -->
+          <div class="col-md-4 col-sm-4 mb">
+            <!-- REVENUE PANEL -->
+            <div class="green-panel pn">
+              <div class="green-header">
+                <h5>REVENUE</h5>
+              </div>
+              <div class="chart mt">
+                <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,464,655]"></div>
+              </div>
+              <p class="mt"><b>$ 17,980</b><br/>Month Income</p>
+            </div>
+          </div>
+          <!-- /col-md-4 -->
+        </div>
+        <div class="tab-pane" id="chartjs">
+          <div class="row mt">
+            <div class="col-lg-6">
+              <div class="content-panel">
+                <h4><i class="fa fa-angle-right"></i> Doughnut</h4>
+                <div class="panel-body text-center">
+                  <canvas id="doughnut" height="300" width="400"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="content-panel">
+                <h4><i class="fa fa-angle-right"></i> Line</h4>
+                <div class="panel-body text-center">
+                  <canvas id="line" height="300" width="400"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt">
+            <div class="col-lg-6">
+              <div class="content-panel">
+                <h4><i class="fa fa-angle-right"></i> Radar</h4>
+                <div class="panel-body text-center">
+                  <canvas id="radar" height="300" width="400"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="content-panel">
+                <h4><i class="fa fa-angle-right"></i> Polar Area</h4>
+                <div class="panel-body text-center">
+                  <canvas id="polarArea" height="300" width="400"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt">
+            <div class="col-lg-6">
+              <div class="content-panel">
+                <h4><i class="fa fa-angle-right"></i> Bar</h4>
+                <div class="panel-body text-center">
+                  <canvas id="bar" height="300" width="400"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="content-panel">
+                <h4><i class="fa fa-angle-right"></i> Pie</h4>
+                <div class="panel-body text-center">
+                  <canvas id="pie" height="300" width="400"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- page end-->
+      </section>
+    </section>
+    <!-- /MAIN CONTENT -->
+    <!--main content end-->
+    <!--footer start-->
+    <footer class="footer8">
+	    <div class="container">
+	        <div class="col-md-12">
+	            <p class="pull-left small">© Copyright - <a href="#">Mad</a> 2018</p>
+	        	<p class="pull-right small">Made with <i class="fa fa-heart"></i> in SFU Big Data</p>
+	        </div>
+	    </div>
+	</footer>
+    <!--footer end-->
+  </section>
+  <script src="js/chart-master/jquery.sparkline.js"></script>
+  <script src="js/chart-master/chartjs-conf.js"></script>
+  <script src="js/chart-master/sparkline-chart.js"></script>
+</body>
+</html>

@@ -1,0 +1,815 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>JobGo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="uikit/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+    <!-- Edit CSS -->
+    <link href="css/default.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,900,700,600,300,200" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700" rel="stylesheet">
+    
+    <!-- Custom styles for this template -->
+	<link href="css/style.css" rel="stylesheet">
+	<link href="css/style-responsive.css" rel="stylesheet">
+	
+	<!-- Favicons -->
+	<link href="img/favicon.png" rel="icon">
+	<link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+	  
+    <!--=== Load JS here for greater good ====-->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="uikit/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap.min.js"></script>
+    <script src="js/chart-master/Chart.js"></script>
+    <!-- js placed at the end of the document so the pages load faster -->
+	<script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+	<script src="js/jquery.scrollTo.min.js"></script>
+	<script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+	<!--common script for all pages-->
+	<script src="js/common-scripts.js"></script>
+	<style>
+		.table{
+			font-family: "Helvetica Neue";
+			text-align:center;
+		}
+		.table th{
+			text-align: center;
+		}
+		#reviewTable td{
+			vertical-align: middle;
+		}
+		#alumniTable td{
+			vertical-align: middle;
+		}
+		.benefit {
+			color: #48cfad;
+			font-size: 28px;
+		}
+		.rating-block{
+			background-color:#FAFAFA;
+			border:1px solid #EFEFEF;
+			padding:15px 15px 20px 15px;
+			border-radius:3px;
+		}
+		.padding-bottom-7{
+			padding-bottom:7px;
+		}
+		
+		.review-block{
+			background-color:#FAFAFA;
+			border:1px solid #EFEFEF;
+			padding:15px;
+			border-radius:3px;
+			margin-bottom:15px;
+		}
+		.review-block-name{
+			font-size:12px;
+			margin:10px 0;
+		}
+		.review-block-date{
+			font-size:12px;
+		}
+		.review-block-rate{
+			font-size:13px;
+			margin-bottom:15px;
+		}
+		.review-block-title{
+			font-size:15px;
+			font-weight:700;
+			margin-bottom:10px;
+		}
+		.review-block-description{
+			font-size:13px;
+		}
+		
+		.progress{
+			height: 10px;
+			margin-bottom: 10px;
+		}
+		p{
+			margin-bottom: 5px;
+		}
+		.progress-bar {
+		    -webkit-transition: width 1s ease;
+		    transition: width 1s ease;
+		}
+	</style>
+</head>
+
+<script th:inline="javascript">
+	var compId = [[${company.compId}]];
+	var avgRatingScore = [[${avgRatingScore}]];
+	var itvStat = [[${itvStat}]];
+</script>
+
+<script>
+	function f_init(){
+		
+		//init progress bar
+		for (var key in avgRatingScore){
+			var id = "progress_" + key;
+			var color = "info";
+			if (avgRatingScore[key] > 80){
+				color = "success";
+			} else if(avgRatingScore[key] > 60){
+				color = "primary";
+			} else if(avgRatingScore[key] > 40){
+				color = "info";
+			} else if(avgRatingScore[key] > 20){
+				color = "warning";
+			} else {
+				color = "danger";
+			}
+			$("#"+id).css('width', avgRatingScore[key] + "%");
+			$("#"+id).addClass("progress-bar-"+color);
+		}
+		
+		$('#job_tab').click(function(e) {
+			e.preventDefault();
+			$('#confirmViewJobs').modal('show');
+			return false;
+		});
+		
+		$('#reviewTable').DataTable({
+	        ajax: "/review?compId=" + compId,
+	        lengthMenu: [ 5, 10, 25],
+	        pageLength: 5,
+	        responsive: true,
+	        autoWidth: false,
+	        order: [0, "asc"],
+	        drawCallback: function( settings ) {
+	        	//$('[data-toggle="tooltip"]').tooltip();
+	        	$('#reviewTable tbody').on( 'click', '.show-pros-btn', function () {
+	        		var table = $('#reviewTable').DataTable();
+	        		var rowData = table.row( $(this).parents('tr') ).data();
+	        		f_showFullReview(rowData.pros);
+	        	});
+	        	$('#reviewTable tbody').on( 'click', '.show-cons-btn', function () {
+	        		var table = $('#reviewTable').DataTable();
+	        		var rowData = table.row( $(this).parents('tr') ).data();
+	        		f_showFullReview(rowData.cons);
+	        	});
+	        },
+	        columns: [
+	        	{ 
+	        		"data": "reviewId",
+	        		"width": "5%",
+	        		responsivePriority: 0
+	        	},
+	            {
+	        		"data": "reviewerTitle",
+	        		"width": "5%",
+	        		responsivePriority: 1
+	        	},
+	            {
+	        		"data": "pros",
+	        		"width": "45%",
+	        		responsivePriority: 2,
+	        		render: function ( data, type, row ) {
+	        			if (!!data && data.length > 40){
+	        				return data.substring(0, 40) + ' ... <button type="button" class="btn btn-link show-pros-btn">view more</button>';
+	        			} else {
+	        				return data;
+	        			}
+	        	    }
+	        	},
+	            {
+	        		"data": "cons",
+	        		"width": "45%",
+	        		responsivePriority: 2,
+	        		render: function ( data, type, row ) {
+	        			if (!!data && data.length > 40){
+	        				return data.substring(0, 40) + ' ... <button type="button" class="btn btn-link show-cons-btn">view more</button>';
+	        			} else {
+	        				return data;
+	        			}
+	        	    }
+	        	}
+	        ]
+	    });
+		
+		$('#alumniTable').DataTable({
+	        lengthMenu: [ 5, 10, 25],
+	        pageLength: 5,
+	        responsive: true,
+	        autoWidth: false,
+	        order: [0, "asc"],
+	        drawCallback: function( settings ) {
+	        	$('[data-toggle="tooltip"]').tooltip();
+	        	$('#alumniTable tbody').off('click', '.show-linkedin-btn');
+	        	$('#alumniTable tbody').on( 'click', '.show-linkedin-btn', function () {
+	        		var table = $('#alumniTable').DataTable();
+	        		var rowData = table.row( $(this).parents('tr') ).data();
+	        		if (rowData.link.substring(0,4) != "http"){
+	        			window.open("http://"+rowData.link);
+	        		} else {
+	        			window.open(rowData.link);
+	        		}
+	        		
+	        	});
+	        },
+	        columns: [
+	        	{ 
+	        		"data": "personId",
+	        		responsivePriority: 0
+	        	},
+	            {
+	        		"data": "name",
+	        		responsivePriority: 8,
+	        		render: function ( data, type, row ) {
+	        			if (!!row.link){
+	        				return '<button type="button" class="btn btn-link show-linkedin-btn" style="font-size:16px" data-toggle="tooltip" data-placement="right" title="View His/Her Linkedin Page" >'+ data +'</button>';
+	        			} else {
+	        				return data;
+	        			}
+	        	    }
+	        	},
+	            {
+	        		"data": "compId",
+	        		responsivePriority: 6
+	        	},
+	            {
+	        		"data": "title",
+	        		responsivePriority: 7
+	        	},
+	        	{
+	        		"data": "city",
+	        		responsivePriority: 4
+	        	},
+	        	/* {
+	        		"data": "startDate",
+	        		responsivePriority: 5,
+	        		render: function ( data, type, row ) {
+	        			if (!!data && data != '0000-00-00'){
+	        				return data.substring(0,4);
+	        			} else {
+	        				return '';
+	        			}
+	        	    }
+	        	},
+	        	{
+	        		"data": "endDate",
+	        		responsivePriority: 5,
+	        		render: function ( data, type, row ) {
+	        			if (!!data && data != '0000-00-00'){
+	        				return data.substring(0,4);
+	        			} else {
+	        				return '';
+	        			}
+	        	    }
+	        	}, */
+	        	{
+	        		"data": "description",
+	        		responsivePriority: 3
+	        	}
+	        ]
+	    });
+	}
+	
+	function f_showFullReview(data){
+		$('#reviewModalContent').text(data);
+		$('#reviewModal').modal('show');
+	}
+	
+	function f_searchAlumni(){
+		if ($('#alumniSchool').val() == ""){
+			$('#alumni_row').hide();
+			return;
+		}
+		$('#disp_university').text($('#alumniSchool').val());
+		$('#disp_company').text(compId);
+		var table = $('#alumniTable').DataTable();
+		 
+		table.ajax.url('/alumni?compId='+compId+'&education='+$('#alumniSchool').val()).load();
+		
+		$('#alumni_row').show();
+	}
+	
+	function f_searchJobs(){
+		window.location = "/search?searchType=0&searchText=" + compId + "&compId=" + compId;
+	}
+	
+	function runScript(e) {
+	    //See notes about 'which' and 'key'
+	    if (e.keyCode == 13) {
+	        f_searchAlumni();
+	        return false;
+	    }
+	}
+$(document).ready(f_init);
+</script>
+<body>
+	<header class="header8" id="home">
+	    <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+	        <div class="container">
+	        <div class="navbar-header">
+	            <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle" type="button">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	            </button>
+	            <a href="/index" class="navbar-brand brand"><i class="fab fa-sellsy"></i><span>Dior</span><span>SFU BigData</span></a>
+	        </div>
+	
+	        <div id="navbar-collapse-02" class="collapse navbar-collapse">
+	            <ul class="nav navbar-nav navbar-right">
+	                <li><a class="scroll" href="/index">Home</a></li>
+	                <li><a class="scroll" href="/job">Job</a></li>
+	                <li class="active"><a class="scroll" href="/company">Company</a></li>
+	                <li><a class="scroll" href="/analysis">Analysis</a></li>
+	            </ul>
+	        </div>
+	    </nav>
+	</header>
+	<section id="container">
+	    <section id="main-content">
+			<section class="wrapper site-min-height" style="margin-top:60px">
+				<div class="row mt">
+					<div class="col-lg-12">
+						<div class="row content-panel">
+							<!-- /col-md-4 -->
+							<div class="col-md-4 centered">
+								<div class="profile-pic">
+								<br><br>
+								<p><img th:src="@{/images/company_logo/{compId}.png(compId=${#strings.toLowerCase(company.compId)})}" class="img-circle"></p>
+									<!--/*
+									<p>
+									  <button class="btn btn-theme"><i class="fa fa-check"></i> Follow</button>
+									  <button class="btn btn-theme02">Add</button>
+									</p>
+									*/-->
+								</div>
+							</div>
+							<!-- /col-md-4 -->
+							<div class="col-md-4 profile-text centered">
+								<div class="left-divider right-divider">
+									<h3 th:text="${company.compId}">Amazon</h3>
+									<p th:text="'Headquarter: '+ ${company.hqCity} + ', ' + ${company.hqProvince} + ', ' + ${company.hqCountry}">Headquarter: Seattle, WA (US)</p>
+									<p>Website: <a th:href="${company.webSite}" th:text="${company.webSite}" target="_blank">www.amazon.jobs</a></p>
+									<p th:text="'Type: '+${company.type}">Type: Company - Public (AMZN)</p>
+									<p th:text="'Industry: '+${company.industry}">Industry: Internet</p>
+									<p th:text="'Size: '+ (${company.size != null} ? ${company.size} : 'Unknown')">Size: 10000+ employees</p>
+									<p th:text="'Revenue: '+ (${company.revenue != null} ? ${company.revenue} : 'Unknown')">Revenue: $10+ billion (CAD) per year</p>
+									<p th:text="'Founded: '+ (${company.founded != null} ? ${company.founded} : 'Unknown')">Founded: 1972</p>
+								</div>
+							</div>
+							<!-- /col-md-4
+							<div class="col-md-4 profile-text mt mb centered">
+								<div class="hidden-sm hidden-xs">
+								    <h4 th:text="${company.size != null} ? ${company.size} : 'Unknown'">10000+ employees</h4>
+								    <h6>Size</h6>
+								    <h4 th:text="${company.revenue != null} ? ${company.revenue} : 'Unknown'">$10+ billion (CAD) per year</h4>
+								    <h6>Revenue</h6>
+								    <h4 th:text="${company.founded != null} ? ${company.founded} : 'Unknown'">1972</h4>
+								    <h6>Founded</h6>
+								</div>
+							</div>
+							 -->
+							<div class="col-md-4 detailed">
+								<h4>Ratings</h4>
+								<div class="row centered">
+								  <div class="col-md-8 col-md-offset-2">
+								    <p>Work/Life Balance: [[${avgRatingScore.get('workLife')}]]</p>
+								    <div class="progress">
+								      	<div id="progress_workLife" class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+								      	</div>
+								    </div>
+								    <p>Culture & Values: [[${avgRatingScore.get('culture')}]]</p>
+								    <div class="progress">
+								      	<div id="progress_culture" class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+								      	</div>
+								    </div>
+								    <p>Career Opportunities: [[${avgRatingScore.get('career')}]]</p>
+								    <div class="progress">
+								      	<div id="progress_career" class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+								      	</div>
+								    </div>
+								    <p>Comp & Benefits: [[${avgRatingScore.get('comp')}]]</p>
+								  	<div class="progress">
+								      	<div id="progress_comp" class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+								    	</div>
+								  	</div>
+								  	<p>Senior Management: [[${avgRatingScore.get('management')}]]</p>
+								  	<div class="progress">
+								      	<div id="progress_management" class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+								    	</div>
+								  	</div>
+								  </div>
+								  <!-- /col-md-8 -->
+								</div>
+								<!-- /row -->
+							</div>
+						</div>
+						<!-- /row -->
+					</div>
+				  	<!-- /col-lg-12 -->
+					<div class="col-lg-12 mt">
+						<div class="row content-panel">
+							<div class="panel-heading">
+								<ul class="nav nav-tabs nav-justified">
+								    <li class="active">
+								      <a data-toggle="tab" href="#overview">Overview</a>
+								    </li>
+								    <li>
+								      <a data-toggle="tab" href="#review" class="contact-map">Review</a>
+								    </li>
+								    <li>
+								      <a data-toggle="tab" href="#alumni">Alumni</a>
+								    </li>
+								    <li>
+								      <a id="job_tab" data-toggle="tab" href="#Jobs">Jobs</a>
+								    </li>
+								</ul>
+							</div>
+							
+							<div class="panel-body">
+								<div class="tab-content">
+							    <div id="overview" class="tab-pane active">
+									<div class="row">
+										<div class="col-md-8 detailed">
+											<h4>Interview Statistic</h4>
+											<div class="row centered col-md-4">
+												<canvas id="itv_experience" height="200" width="200"></canvas>
+												<script>
+													var itv_experience_doughnut = new Chart($("#itv_experience"), {
+													    type: 'pie',
+													    data: {
+													        labels: ["Positive", "Neutral", "Negative"],
+													        datasets: [{
+													            data: [itvStat.experience.Positive, itvStat.experience.Neutral, itvStat.experience.Negative],
+													            backgroundColor: [
+													            	'rgba(75, 192, 192, 0.5)',
+													            	'rgba(255, 206, 86, 0.5)',
+													                'rgba(255, 99, 132, 0.5)'
+													            ],
+													            borderColor: [
+													            	'rgba(75, 192, 192, 1)',
+													            	'rgba(255, 206, 86, 1)',
+													                'rgba(255,99,132,1)'
+													            ],
+													            borderWidth: 1
+													        }]
+													    },
+													    options: {
+													    	title: {
+													            display: true,
+													            text: 'Experience (%)'
+													        },
+													        legend: {
+													        	position: 'right',
+													            labels: {
+													            	boxWidth: 12
+													            }
+													        },
+													        responsiveAnimationDuration: 1000
+													    	//responsive: false
+													    }
+													});
+												</script>
+											</div>
+											<div class="row centered col-md-5 col-md-offset-1">
+												<canvas id="itv_obtain_way" height="300" width="300"></canvas>
+												<script>
+													var labels = [];
+													var dataSet = [];
+													for (var k in itvStat.obtainWay){
+														labels.push(k);
+														dataSet.push(itvStat.obtainWay[k]);
+													}
+													var itv_obtain_way_doughnut = new Chart($("#itv_obtain_way"), {
+													    type: 'pie',
+													    data: {
+													        labels: labels,
+													        datasets: [{
+													            data: dataSet,
+													            backgroundColor: [
+																	'rgba(255, 99, 132, 0.5)',
+																	'rgba(54, 162, 235, 0.5)',
+																	'rgba(255, 206, 86, 0.5)',
+																	'rgba(75, 192, 192, 0.5)',
+																	'rgba(153, 102, 255, 0.5)',
+																	'rgba(255, 159, 64, 0.5)',
+																	'rgba(191, 54, 12, 0.5)',
+																	'rgba(230, 230, 230, 0.5)',
+													            ],
+													            borderColor: [
+													                'rgba(255,99,132,1)',
+													                'rgba(54, 162, 235, 1)',
+													                'rgba(255, 206, 86, 1)',
+													                'rgba(75, 192, 192, 1)',
+													                'rgba(153, 102, 255, 1)',
+													                'rgba(255, 159, 64, 1)',
+													                'rgba(191, 54, 12, 1)',
+													                'rgba(230, 230, 230, 1)',
+													            ],
+													            borderWidth: 1
+													        }]
+													    },
+													    options: {
+													    	title: {
+													            display: true,
+													            text: 'Getting an Interview (%)'
+													        },
+													    	legend: {
+													        	position: 'right',
+													            labels: {
+													            	boxWidth: 12
+													            }
+													        },
+													        responsiveAnimationDuration: 1000
+													    	//responsive: false
+													    }
+													});
+												</script>
+											</div>
+											<div class="row centered col-md-1 col-md-offset-1">
+												<canvas id="itv_difficulty" height="280" width="100"></canvas>
+												<script>
+													var itv_difficulty_doughnut = new Chart($("#itv_difficulty"), {
+														type: 'bar',
+													    data: {
+													        labels: ["Difficulty"],
+													        datasets: [{
+													        	label: 'Difficulty',
+													            data: [itvStat.difficulty],
+													            backgroundColor: [
+													                'rgba(54, 162, 235, 0.5)'
+													            ],
+													            borderColor: [
+													                'rgba(54, 162, 235, 1)'
+													            ],
+													            borderWidth: 1
+													        }]
+													    },
+													    options: {
+													    	title: {
+													            display: true,
+													            text: 'Difficulty'
+													        },
+													        legend: {
+													            display: false
+													        },
+													        scales: {
+													        	xAxes: [{
+													        		barPercentage: 0.3
+													        	}],
+													            yAxes: [{
+													                ticks: {
+													                    beginAtZero:true,
+													                    suggestedMax: 5
+													                }
+													            }]
+													        },
+													        responsiveAnimationDuration: 1000,
+													        responsive: false
+													    }
+													});
+												</script>
+											</div>
+											<!-- /row -->
+										</div>
+										<div class="col-md-4 detailed">
+											<h4>Benefits Info</h4>
+											<div class="row">
+											  <div class="col-md-10 col-md-offset-1">
+											    <div th:each="key : ${benefitMap.keySet()}">
+											    	<div class="col-md-2">
+											    		<br>
+											    		<i class="fab fa-alipay benefit"  th:class="'benefit fas '+ ${benefitLogoDict.get(key)}"}></i>
+											    	</div>
+											    	<div class="col-md-10">
+												    	<div class="row">
+												    		<h5 th:text="${key}">Life Insurance</h5>
+												    	</div>
+												    	<div class="row" >
+												    		<p th:text="'——'+${benefitMap.get(key)}">"Top notch life insurance program"</p>
+												    	</div>
+											    	</div>
+											    </div>
+											  </div>
+											  <!-- /col-md-8 -->
+											</div>
+										</div>
+										<!-- /col-md-4 -->
+									</div>
+									<!-- /OVERVIEW -->
+							    </div>
+							    <!-- /tab-pane -->
+							    <div id="review" class="tab-pane">
+									<div class="row">
+										<!-- /col-md-6 -->
+										<div class="col-lg-10 col-lg-offset-1 detailed">
+									  		<h4>Company Reviews</h4>
+									    	<table id="reviewTable" class="table table-striped table-bordered">
+												<thead>
+										            <tr>
+										            	<th>#</th>
+										                <th>Reviewer</th>
+										                <th>Pros</th>
+										                <th>Cons</th>
+										            </tr>
+										        </thead>
+										    </table>
+										</div>
+									</div>
+									<!-- /row -->
+							    </div>
+							    <!-- /tab-pane -->
+							    <div id="alumni" class="tab-pane">
+							    	<div class="row">
+							    		<div class="col-lg-12">
+								    		<form class="text-center form-inline" action="/search">
+									    		<div class="form-group">
+										    		<input type="hidden" class="form-control"name="compId"/>
+										    		<input type="text" class="form-control" id="alumniSchool" name="alumniSchool" placeholder="University Name" style="min-width:250px" onkeypress="return runScript(event)"/>
+										    	</div>
+										    	<div class="btn-group">
+										    		<button type="button" class="btn btn-info" onclick="f_searchAlumni();">Find</button>
+										    	</div>
+									    	</form>
+								    	</div>
+							    	</div>
+							    	<div class="row" id="alumni_row" style="display:none">
+							    		<!-- /col-md-6 -->
+										<div class="col-lg-10 col-lg-offset-1 detailed">
+									  		<h4>
+									  			Alumni of <span id="disp_university" class="text-danger">Test</span> in <span id="disp_company">Amazon</span>
+									  		</h4>
+									    	<table id="alumniTable" class="table table-striped table-bordered">
+												<thead>
+										            <tr>
+										            	<th>#</th>
+										                <th>Name</th>
+										                <th>Company</th>
+										                <th>Title</th>
+										                <th>Location</th>
+										                <th>Desc</th>
+										            </tr>
+										        </thead>
+										    </table>
+										</div>
+							    	</div>
+								</div>
+								<!-- /Alumni -->
+								<div id="Jobs" class="tab-pane">
+									<div class="row">
+										<div class="col-lg-8 col-lg-offset-2 detailed">
+											<h4 class="mb">Personal Information</h4>
+											<form role="form" class="form-horizontal">
+											  	<div class="form-group">
+												    <label class="col-lg-2 control-label"> Avatar</label>
+												    <div class="col-lg-6">
+												      	<input type="file" id="exampleInputFile" class="file-pos">
+												    </div>
+											  	</div>
+											  	<div class="form-group">
+											    	<label class="col-lg-2 control-label">Company</label>
+											    	<div class="col-lg-6">
+											      		<input type="text" placeholder=" " id="c-name" class="form-control">
+											    	</div>
+											  	</div>
+											  	<div class="form-group">
+											    	<label class="col-lg-2 control-label">Lives In</label>
+											    	<div class="col-lg-6">
+											    		<input type="text" placeholder=" " id="lives-in" class="form-control">
+											    	</div>
+											  	</div>
+											  	<div class="form-group">
+												    <label class="col-lg-2 control-label">Country</label>
+												    <div class="col-lg-6">
+												    	<input type="text" placeholder=" " id="country" class="form-control">
+												    </div>
+											  	</div>
+												<div class="form-group">
+													<label class="col-lg-2 control-label">Description</label>
+												  	<div class="col-lg-10">
+												    	<textarea rows="10" cols="30" class="form-control" id="" name=""></textarea>
+												  	</div>
+												</div>
+											</form>
+										</div>
+										<div class="col-lg-8 col-lg-offset-2 detailed mt">
+											<h4 class="mb">Contact Information</h4>
+											<form role="form" class="form-horizontal">
+												<div class="form-group">
+													<label class="col-lg-2 control-label">Address 1</label>
+													<div class="col-lg-6">
+												   		<input type="text" placeholder=" " id="addr1" class="form-control">
+												  	</div>
+												</div>
+												<div class="form-group">
+												  	<label class="col-lg-2 control-label">Address 2</label>
+												  	<div class="col-lg-6">
+												    	<input type="text" placeholder=" " id="addr2" class="form-control">
+												  	</div>
+												</div>
+												<div class="form-group">
+												  	<label class="col-lg-2 control-label">Phone</label>
+												  	<div class="col-lg-6">
+												    	<input type="text" placeholder=" " id="phone" class="form-control">
+												  	</div>
+												</div>
+												<div class="form-group">
+												  	<label class="col-lg-2 control-label">Cell</label>
+												  	<div class="col-lg-6">
+												    	<input type="text" placeholder=" " id="cell" class="form-control">
+												  	</div>
+												</div>
+												<div class="form-group">
+												  	<label class="col-lg-2 control-label">Email</label>
+												  	<div class="col-lg-6">
+												    	<input type="text" placeholder=" " id="email" class="form-control">
+												  	</div>
+												</div>
+												<div class="form-group">
+												  	<label class="col-lg-2 control-label">Skype</label>
+												  	<div class="col-lg-6">
+												    	<input type="text" placeholder=" " id="skype" class="form-control">
+												  	</div>
+												</div>
+												<div class="form-group">
+												  	<div class="col-lg-offset-2 col-lg-10">
+												    	<button class="btn btn-theme" type="submit">Save</button>
+												    	<button class="btn btn-theme04" type="button">Cancel</button>
+												  	</div>
+												</div>
+											</form>
+										</div>
+										<!-- /col-lg-8 -->
+									</div>
+									<!-- /row -->
+							    </div>
+							    <!-- /Jobs -->
+							  	</div>
+								</div>
+								<!-- /tab-content -->
+							</div>
+							<!-- /panel-body -->
+						</div>
+						<!-- /col-lg-12 -->
+					</div>
+					<!-- /row -->
+				</div>
+				<!-- /container -->
+			</section>
+			<!-- /wrapper -->
+		</section>
+	</section>
+	<footer class="footer8">
+	    <div class="container">
+	        <div class="col-md-12">
+	            <p class="pull-left small">© Copyright - <a href="#">Mad</a> 2018</p>
+	        	<p class="pull-right small">Made with <i class="fa fa-heart"></i> in SFU Big Data</p>
+	        </div>
+	    </div>
+	</footer>
+	
+	<!-- Modal -->
+	<div class="modal fade bs-example-modal-lg" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<span class="modal-title">Company Review</span>
+				</div>
+				<div class="modal-body">
+					<p id="reviewModalContent">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade bs-example-modal-sm" id="confirmViewJobs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<span class="modal-title">Confirm</span>
+				</div>
+				<div class="modal-body">
+					<h5>Search all jobs of [[${company.compId}]]?</h5>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        			<button type="button" class="btn btn-primary" onclick="f_searchJobs()">Yes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

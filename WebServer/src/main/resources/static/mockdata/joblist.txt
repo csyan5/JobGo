@@ -1,0 +1,525 @@
+{
+  "data": [
+    {
+      "job_id": "1",
+      "comp_id": "Tiger Nixon",
+      "title": "System Architect",
+      "avg_salary": "$320,800",
+      "salary_range": "2011/04/25",
+      "location": "Edinburgh",
+      "description": "5421",
+      "apply_link": "http://www.google.com/",
+      "interview" : "30"
+    },
+    {
+      "job_id": "2",
+      "comp_id": "Garrett Winters",
+      "title": "Accountant",
+      "avg_salary": "$170,750",
+      "salary_range": "2011/07/25",
+      "location": "Tokyo",
+      "description": "<div class=\"jobsearch-JobComponent-description icl-u-xs-mt--md\"><div class=\"jobsearch-JobMetadataHeader icl-u-xs-mb--md\"><div class=\"jobsearch-JobMetadataHeader-item icl-u-xs-mt--xs\">Part-time</div></div><div><div><div><div><h2 class=\"jobSectionHeader\"><b>Summary</b></h2><div><div>\nPosted: <b>Jun 28, 2018</b>\n</div><div>Weekly Hours: <b>25</b>\n</div><div>Role Number: <b>113760307</b></div></div></div><div>\nThe people here at Apple don\u2019t just create products \u2014 they enrich the lives of hundreds of millions of people around the world. It\u2019s the diversity of our people and their ideas that inspires the innovation that runs through everything we do, from amazing technology to industry-leading environmental efforts. Join Apple, and help us leave the world better than we found it. As a Part-Time Reseller Sales Specialist based in a reseller store, you will work a schedule that includes evenings and weekends, approximately 25 hours per week. You will help create the energy and excitement around Apple products, providing the right solutions and getting products into customers\u2019 hands. You understand that Apple is dedicated to delivering a customer experience that\u2019s unlike any other. It starts with you discovering customers\u2019 needs. You match those needs with the right products, and then with the support of your partner you help customers develop lifelong relationships with Apple. Every day you\u2019ll encounter unique opportunities to change lives and make a difference.\n</div></div></div><div><div><div><div><h2 class=\"jobSectionHeader\"><div><b>Key Qualifications</b></div></h2><p>\nKey Qualifications</p></div><div><div><ul><li>\nYou see the world through the eyes of the customer by deeply understanding their business needs, challenges, and concerns. You obsess over the details and how customers experience our products and services. You not only meet our customers\u2019 expectations, but you exceed them.</li><li>\nYou believe that effective communication is key. You actively listen and explore endless possibilities with customers. You recognize customer needs can often be unique - you patiently listen to every detail and translate them into simple solutions.</li><li>\nYou reinforce and support Apple Training programs available to store staff.</li><li>\nYou strive to maintain an outstanding brand presentation in accordance with Apple\u2019s merchandising standards.</li><li>\nYou strive for excellence in everything you do and are dedicated to continuous learning about Apple products and solutions.</li><li>\nApple doesn\u2019t cut corners, in products or in business. You bring the highest level of integrity, honesty, and accountability in all that you do, every single day. You are a trusted advisor who does what you say you\u2019ll do \u2013 and always does what\u2019s best for Apple.</li></ul></div></div></div></div><div><div><div><h2 class=\"jobSectionHeader\"><div><b>\nDescription</b></div></h2><p>\nDescription</p></div><div><div>\nAs the Part-Time Reseller Sales Specialist in a reseller store, you are highly skilled at uncovering customers\u2019 needs, then following through with enlightening solutions. Always curious, you stay on top of news about products and initiatives, ready to apply your learnings in customer interactions. Providing a great experience also includes showcasing our hero products, accessories and services through best-in-class merchandising in accordance with Apple standards. Your success is measured by your ability to create new owners of our products and building a community of loyal Apple customers who return to the store for service, support, and future purchases of Apple and related 3rd party products. You are proud to represent Apple, and you get great satisfaction from helping customers do more with our products and develop lifelong relationships with our brand.\n</div></div></div></div><div><div><div><h2 class=\"jobSectionHeader\"><div><b>Education &amp; Experience</b></div></h2><p>\nEducation &amp; Experience</p></div><div><div>\n\u2022 High School diploma or equivalent. \u2022 The ideal candidate will possess a sales background within the retail electronics industry for a minimum of two years with a proven sales track record</div></div></div></div><div><div><div><h2 class=\"jobSectionHeader\"><div><b>\nAdditional Requirements</b></div></h2><p>\nAdditional Requirements</p></div><div><div><ul><li>\nYou have a passion for Apple and are eager to share that passion with others. You are willing to embrace Apple\u2019s unique style for service. You have strong people skills\u2014you're approachable, a good listener, and empathetic. Able to work a schedule that includes evenings and weekends, approximately 25 hours per week. Ideally, your will have a background excelling at customer service \u2014 a retail sales background is not necessary but preferred. You will be passionate about creating exceptional customer experiences which includes connecting customers with technology solutions.</li><li>\nApple is an Equal Employment Opportunity Employer that is committed to inclusion and diversity. We also take affirmative action to offer employment and advancement opportunities to all applicants, including minorities, women, protected veterans, and individuals with disabilities.</li></ul></div></div></div></div></div></div></div>",
+      "apply_link": "http://www.google.com/",
+      "interview" : "8"
+    },
+    {
+      "job_id": "3",
+      "comp_id": "Ashton Cox",
+      "title": "Junior Technical Author",
+      "avg_salary": "$86,000",
+      "salary_range": "2009/01/12",
+      "location": "San Francisco",
+      "description": "1562",
+      "apply_link": "http://www.google.com/",
+      "interview" : "22"
+    },
+    {
+      "job_id": "4",
+      "comp_id": "Cedric Kelly",
+      "title": "Senior Javascript Developer",
+      "avg_salary": "$433,060",
+      "salary_range": "2012/03/29",
+      "location": "Edinburgh",
+      "description": "6224",
+      "apply_link": "http://www.google.com/"
+    },
+    {
+      "job_id": "5",
+      "comp_id": "Airi Satou",
+      "title": "Accountant",
+      "avg_salary": "$162,700",
+      "salary_range": "2008/11/28",
+      "location": "Tokyo",
+      "description": "5407",
+      "apply_link": "http://www.google.com/"
+    },
+    {
+      "job_id": "6",
+      "comp_id": "Brielle Williamson",
+      "title": "Integration Specialist",
+      "avg_salary": "$372,000",
+      "salary_range": "2012/12/02",
+      "location": "New York",
+      "description": "4804"
+    },
+    {
+      "job_id": "7",
+      "comp_id": "Herrod Chandler",
+      "title": "Sales Assistant",
+      "avg_salary": "$137,500",
+      "salary_range": "2012/08/06",
+      "location": "San Francisco",
+      "description": "9608"
+    },
+    {
+      "job_id": "8",
+      "comp_id": "Rhona Davidson",
+      "title": "Integration Specialist",
+      "avg_salary": "$327,900",
+      "salary_range": "2010/10/14",
+      "location": "Tokyo",
+      "description": "6200"
+    },
+    {
+      "job_id": "9",
+      "comp_id": "Colleen Hurst",
+      "title": "Javascript Developer",
+      "avg_salary": "$205,500",
+      "salary_range": "2009/09/15",
+      "location": "San Francisco",
+      "description": "2360"
+    },
+    {
+      "job_id": "10",
+      "comp_id": "Sonya Frost",
+      "title": "Software Engineer",
+      "avg_salary": "$103,600",
+      "salary_range": "2008/12/13",
+      "location": "Edinburgh",
+      "description": "1667"
+    },
+    {
+      "job_id": "11",
+      "comp_id": "Jena Gaines",
+      "title": "location Manager",
+      "avg_salary": "$90,560",
+      "salary_range": "2008/12/19",
+      "location": "London",
+      "description": "3814"
+    },
+    {
+      "job_id": "12",
+      "comp_id": "Quinn Flynn",
+      "title": "Support Lead",
+      "avg_salary": "$342,000",
+      "salary_range": "2013/03/03",
+      "location": "Edinburgh",
+      "description": "9497"
+    },
+    {
+      "job_id": "13",
+      "comp_id": "Charde Marshall",
+      "title": "Regional Director",
+      "avg_salary": "$470,600",
+      "salary_range": "2008/10/16",
+      "location": "San Francisco",
+      "description": "6741"
+    },
+    {
+      "job_id": "14",
+      "comp_id": "Haley Kennedy",
+      "title": "Senior Marketing Designer",
+      "avg_salary": "$313,500",
+      "salary_range": "2012/12/18",
+      "location": "London",
+      "description": "3597"
+    },
+    {
+      "job_id": "15",
+      "comp_id": "Tatyana Fitzpatrick",
+      "title": "Regional Director",
+      "avg_salary": "$385,750",
+      "salary_range": "2010/03/17",
+      "location": "London",
+      "description": "1965"
+    },
+    {
+      "job_id": "16",
+      "comp_id": "Michael Silva",
+      "title": "Marketing Designer",
+      "avg_salary": "$198,500",
+      "salary_range": "2012/11/27",
+      "location": "London",
+      "description": "1581"
+    },
+    {
+      "job_id": "17",
+      "comp_id": "Paul Byrd",
+      "title": "Chief Financial Officer (CFO)",
+      "avg_salary": "$725,000",
+      "salary_range": "2010/06/09",
+      "location": "New York",
+      "description": "3059"
+    },
+    {
+      "job_id": "18",
+      "comp_id": "Gloria Little",
+      "title": "Systems Administrator",
+      "avg_salary": "$237,500",
+      "salary_range": "2009/04/10",
+      "location": "New York",
+      "description": "1721"
+    },
+    {
+      "job_id": "19",
+      "comp_id": "Bradley Greer",
+      "title": "Software Engineer",
+      "avg_salary": "$132,000",
+      "salary_range": "2012/10/13",
+      "location": "London",
+      "description": "2558"
+    },
+    {
+      "job_id": "20",
+      "comp_id": "Dai Rios",
+      "title": "Personnel Lead",
+      "avg_salary": "$217,500",
+      "salary_range": "2012/09/26",
+      "location": "Edinburgh",
+      "description": "2290"
+    },
+    {
+      "job_id": "21",
+      "comp_id": "Jenette Caldwell",
+      "title": "Development Lead",
+      "avg_salary": "$345,000",
+      "salary_range": "2011/09/03",
+      "location": "New York",
+      "description": "1937"
+    },
+    {
+      "job_id": "22",
+      "comp_id": "Yuri Berry",
+      "title": "Chief Marketing Officer (CMO)",
+      "avg_salary": "$675,000",
+      "salary_range": "2009/06/25",
+      "location": "New York",
+      "description": "6154"
+    },
+    {
+      "job_id": "23",
+      "comp_id": "Caesar Vance",
+      "title": "Pre-Sales Support",
+      "avg_salary": "$106,450",
+      "salary_range": "2011/12/12",
+      "location": "New York",
+      "description": "8330"
+    },
+    {
+      "job_id": "24",
+      "comp_id": "Doris Wilder",
+      "title": "Sales Assistant",
+      "avg_salary": "$85,600",
+      "salary_range": "2010/09/20",
+      "location": "Sidney",
+      "description": "3023"
+    },
+    {
+      "job_id": "25",
+      "comp_id": "Angelica Ramos",
+      "title": "Chief Executive Officer (CEO)",
+      "avg_salary": "$1,200,000",
+      "salary_range": "2009/10/09",
+      "location": "London",
+      "description": "5797"
+    },
+    {
+      "job_id": "26",
+      "comp_id": "Gavin Joyce",
+      "title": "Developer",
+      "avg_salary": "$92,575",
+      "salary_range": "2010/12/22",
+      "location": "Edinburgh",
+      "description": "8822"
+    },
+    {
+      "job_id": "27",
+      "comp_id": "Jennifer Chang",
+      "title": "Regional Director",
+      "avg_salary": "$357,650",
+      "salary_range": "2010/11/14",
+      "location": "Singapore",
+      "description": "9239"
+    },
+    {
+      "job_id": "28",
+      "comp_id": "Brenden Wagner",
+      "title": "Software Engineer",
+      "avg_salary": "$206,850",
+      "salary_range": "2011/06/07",
+      "location": "San Francisco",
+      "description": "1314"
+    },
+    {
+      "job_id": "29",
+      "comp_id": "Fiona Green",
+      "title": "Chief Operating Officer (COO)",
+      "avg_salary": "$850,000",
+      "salary_range": "2010/03/11",
+      "location": "San Francisco",
+      "description": "2947"
+    },
+    {
+      "job_id": "30",
+      "comp_id": "Shou Itou",
+      "title": "Regional Marketing",
+      "avg_salary": "$163,000",
+      "salary_range": "2011/08/14",
+      "location": "Tokyo",
+      "description": "8899"
+    },
+    {
+      "job_id": "31",
+      "comp_id": "Michelle House",
+      "title": "Integration Specialist",
+      "avg_salary": "$95,400",
+      "salary_range": "2011/06/02",
+      "location": "Sidney",
+      "description": "2769"
+    },
+    {
+      "job_id": "32",
+      "comp_id": "Suki Burks",
+      "title": "Developer",
+      "avg_salary": "$114,500",
+      "salary_range": "2009/10/22",
+      "location": "London",
+      "description": "6832"
+    },
+    {
+      "job_id": "33",
+      "comp_id": "Prescott Bartlett",
+      "title": "Technical Author",
+      "avg_salary": "$145,000",
+      "salary_range": "2011/05/07",
+      "location": "London",
+      "description": "3606"
+    },
+    {
+      "job_id": "34",
+      "comp_id": "Gavin Cortez",
+      "title": "Team Leader",
+      "avg_salary": "$235,500",
+      "salary_range": "2008/10/26",
+      "location": "San Francisco",
+      "description": "2860"
+    },
+    {
+      "job_id": "35",
+      "comp_id": "Martena Mccray",
+      "title": "Post-Sales support",
+      "avg_salary": "$324,050",
+      "salary_range": "2011/03/09",
+      "location": "Edinburgh",
+      "description": "8240"
+    },
+    {
+      "job_id": "36",
+      "comp_id": "Unity Butler",
+      "title": "Marketing Designer",
+      "avg_salary": "$85,675",
+      "salary_range": "2009/12/09",
+      "location": "San Francisco",
+      "description": "5384"
+    },
+    {
+      "job_id": "37",
+      "comp_id": "Howard Hatfield",
+      "title": "location Manager",
+      "avg_salary": "$164,500",
+      "salary_range": "2008/12/16",
+      "location": "San Francisco",
+      "description": "7031"
+    },
+    {
+      "job_id": "38",
+      "comp_id": "Hope Fuentes",
+      "title": "Secretary",
+      "avg_salary": "$109,850",
+      "salary_range": "2010/02/12",
+      "location": "San Francisco",
+      "description": "6318"
+    },
+    {
+      "job_id": "39",
+      "comp_id": "Vivian Harrell",
+      "title": "Financial Controller",
+      "avg_salary": "$452,500",
+      "salary_range": "2009/02/14",
+      "location": "San Francisco",
+      "description": "9422"
+    },
+    {
+      "job_id": "40",
+      "comp_id": "Timothy Mooney",
+      "title": "location Manager",
+      "avg_salary": "$136,200",
+      "salary_range": "2008/12/11",
+      "location": "London",
+      "description": "7580"
+    },
+    {
+      "job_id": "41",
+      "comp_id": "Jackson Bradshaw",
+      "title": "Director",
+      "avg_salary": "$645,750",
+      "salary_range": "2008/09/26",
+      "location": "New York",
+      "description": "1042"
+    },
+    {
+      "job_id": "42",
+      "comp_id": "Olivia Liang",
+      "title": "Support Engineer",
+      "avg_salary": "$234,500",
+      "salary_range": "2011/02/03",
+      "location": "Singapore",
+      "description": "2120"
+    },
+    {
+      "job_id": "43",
+      "comp_id": "Bruno Nash",
+      "title": "Software Engineer",
+      "avg_salary": "$163,500",
+      "salary_range": "2011/05/03",
+      "location": "London",
+      "description": "6222"
+    },
+    {
+      "job_id": "44",
+      "comp_id": "Sakura Yamamoto",
+      "title": "Support Engineer",
+      "avg_salary": "$139,575",
+      "salary_range": "2009/08/19",
+      "location": "Tokyo",
+      "description": "9383"
+    },
+    {
+      "job_id": "45",
+      "comp_id": "Thor Walton",
+      "title": "Developer",
+      "avg_salary": "$98,540",
+      "salary_range": "2013/08/11",
+      "location": "New York",
+      "description": "8327"
+    },
+    {
+      "job_id": "46",
+      "comp_id": "Finn Camacho",
+      "title": "Support Engineer",
+      "avg_salary": "$87,500",
+      "salary_range": "2009/07/07",
+      "location": "San Francisco",
+      "description": "2927"
+    },
+    {
+      "job_id": "47",
+      "comp_id": "Serge Baldwin",
+      "title": "Data Coordinator",
+      "avg_salary": "$138,575",
+      "salary_range": "2012/04/09",
+      "location": "Singapore",
+      "description": "8352"
+    },
+    {
+      "job_id": "48",
+      "comp_id": "Zenaida Frank",
+      "title": "Software Engineer",
+      "avg_salary": "$125,250",
+      "salary_range": "2010/01/04",
+      "location": "New York",
+      "description": "7439"
+    },
+    {
+      "job_id": "49",
+      "comp_id": "Zorita Serrano",
+      "title": "Software Engineer",
+      "avg_salary": "$115,000",
+      "salary_range": "2012/06/01",
+      "location": "San Francisco",
+      "description": "4389"
+    },
+    {
+      "job_id": "50",
+      "comp_id": "Jennifer Acosta",
+      "title": "Junior Javascript Developer",
+      "avg_salary": "$75,650",
+      "salary_range": "2013/02/01",
+      "location": "Edinburgh",
+      "description": "3431"
+    },
+    {
+      "job_id": "51",
+      "comp_id": "Cara Stevens",
+      "title": "Sales Assistant",
+      "avg_salary": "$145,600",
+      "salary_range": "2011/12/06",
+      "location": "New York",
+      "description": "3990"
+    },
+    {
+      "job_id": "52",
+      "comp_id": "Hermione Butler",
+      "title": "Regional Director",
+      "avg_salary": "$356,250",
+      "salary_range": "2011/03/21",
+      "location": "London",
+      "description": "1016"
+    },
+    {
+      "job_id": "53",
+      "comp_id": "Lael Greer",
+      "title": "Systems Administrator",
+      "avg_salary": "$103,500",
+      "salary_range": "2009/02/27",
+      "location": "London",
+      "description": "6733"
+    },
+    {
+      "job_id": "54",
+      "comp_id": "Jonas Alexander",
+      "title": "Developer",
+      "avg_salary": "$86,500",
+      "salary_range": "2010/07/14",
+      "location": "San Francisco",
+      "description": "8196"
+    },
+    {
+      "job_id": "55",
+      "comp_id": "Shad Decker",
+      "title": "Regional Director",
+      "avg_salary": "$183,000",
+      "salary_range": "2008/11/13",
+      "location": "Edinburgh",
+      "description": "6373"
+    },
+    {
+      "job_id": "56",
+      "comp_id": "Michael Bruce",
+      "title": "Javascript Developer",
+      "avg_salary": "$183,000",
+      "salary_range": "2011/06/27",
+      "location": "Singapore",
+      "description": "5384"
+    },
+    {
+      "job_id": "57",
+      "comp_id": "Donna Snider",
+      "title": "Customer Support",
+      "avg_salary": "$112,000",
+      "salary_range": "2011/01/25",
+      "location": "New York",
+      "description": "4226"
+    }
+  ]
+}

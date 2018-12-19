@@ -1,0 +1,13 @@
+#%Module
+
+# Also must create conf/spark-defaults.conf
+
+setenv JAVA_HOME /usr/lib/jvm/java-8-oracle/
+setenv YARN_CONF_DIR /opt/cloudera/parcels/CDH/lib/hadoop-yarn/etc/hadoop/
+prepend-path PATH /home/envmodules/lib/spark-2.3.1-bin-hadoop2.7/bin
+append-path PYTHONPATH $::env(HOME)/.local/lib/python3.5/site-packages
+
+setenv PYSPARK_PYTHON python3
+setenv PYSPARK_DRIVER_PYTHON python3
+setenv PYTHONHASHSEED 732
+setenv SPARK_YARN_USER_ENV "PYSPARK_PYTHON=python3,PYTHONHASHSEED=732,PYTHONPATH=$::env(HOME)/.local/lib/python3.5/site-packages"

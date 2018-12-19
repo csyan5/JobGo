@@ -1,0 +1,599 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JobGo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="uikit/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-select.min.css" rel="stylesheet">
+
+    <!-- Edit CSS -->
+    <link href="css/default.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/p-loading.min.css" />
+	
+    <!-- Font Awesome -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,900,700,600,300,200" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700" rel="stylesheet">
+    
+       <!-- Custom styles for this template -->
+	<link href="css/style.css" rel="stylesheet">
+	<link href="css/style-responsive.css" rel="stylesheet">
+	
+    <!--=== Load JS here for greater good ====-->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="uikit/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap.min.js"></script>
+    <script src="js/bootstrap-select.min.js"></script>
+    <!-- js placed at the end of the document so the pages load faster -->
+	<script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+	<script src="js/jquery.scrollTo.min.js"></script>
+	<script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+	<!--common script for all pages-->
+	<script src="js/common-scripts.js"></script>
+	<script src="js/chart-master/Chart.js"></script>
+	<script type="text/javascript" src="js/p-loading.min.js"></script>
+	
+	<style>
+		
+		.grey-header{
+			background: #ccd1d9;
+			padding: 8px;
+			text-align: center;
+			margin-top: -15px;
+		}
+		.select-new {
+			height: 44px;
+			background-color: aliceblue;
+		}
+		/*
+		.bootstrap-select{
+			z-index: 0;
+		}
+		*/
+	</style>
+</head>
+<script th:inline="javascript">
+	var chartBgColors = [
+	    'rgba(255, 99, 132, 0.5)',
+	    'rgba(54, 162, 235, 0.5)',
+	    'rgba(255, 206, 86, 0.5)',
+	    'rgba(75, 192, 192, 0.5)',
+	    'rgba(153, 102, 255, 0.5)',
+	    'rgba(255, 159, 64, 0.5)',
+	    'rgba(340, 82, 59, 0.5)',
+	    'rgba(26, 35, 126, 0.5)',
+	    'rgba(191, 54, 12, 0.5)',
+	    'rgba(69, 90, 100, 0.5)',
+	    'rgba(0, 131, 143, 0.5)',
+	    'rgba(118, 255, 3, 0.5)',
+	    'rgba(0, 229, 255, 0.5)',
+	    'rgba(48, 79, 254, 0.5)',
+	    'rgba(205, 220, 57, 0.5)'
+	];
+	var chartBorderColors = [
+		'rgba(255,99,132,1)',
+	    'rgba(54, 162, 235, 1)',
+	    'rgba(255, 206, 86, 1)',
+	    'rgba(75, 192, 192, 1)',
+	    'rgba(153, 102, 255, 1)',
+	    'rgba(255, 159, 64, 1)',
+	    'rgba(340, 82, 59, 1)',
+	    'rgba(26, 35, 126, 1)',
+	    'rgba(191, 54, 12, 1)',
+	    'rgba(69, 90, 100, 1)',
+	    'rgba(0, 131, 143, 1)',
+	    'rgba(118, 255, 3, 1)',
+	    'rgba(0, 229, 255, 1)',
+	    'rgba(48, 79, 254, 1)',
+	    'rgba(205, 220, 57, 1)'
+	];
+</script>
+<script>
+	function f_init(){
+		$.fn.selectpicker.Constructor.BootstrapVersion = '3';
+		$('select').selectpicker({
+			style: 'select-new',
+			width: 'fit'
+	  	});
+		
+		$('#chart2_select').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+			f_drawChart2();
+		});
+		$('#chart3_select').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+			f_drawChart3();
+		});
+		$('#chart4_select').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+			f_drawChart4();
+		});
+		$('#chart5_select').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+			f_drawChart5();
+		});
+		
+		f_drawChart1();
+		f_drawChart2();
+		f_drawChart3();
+		f_drawChart4();
+		f_drawChart5();
+	}
+
+	function f_drawChart1(){
+		$('#chart1Container').ploading({action: 'show'});
+		$.ajax({
+			type: 'GET',
+			url: '/doAnalysis',
+			data: {
+				analysisType: "1"
+			},
+			dataType: "json",
+			success: function(ret) {
+				if (!!ret) {
+					$("#chart1Container").children().remove();
+					var canvasHtml = '<canvas id="chart1" width="300" height="100" ></canvas>'
+					$("#chart1Container").append(canvasHtml);
+					
+					f_doDrawBarChart("chart1", ret);
+				}
+			},
+			complete: function (xhr, ts){
+				$('#chart1Container').ploading({action: 'hide'});
+			}
+	    });
+	}
+	
+	function f_showJobTypeSalaryOverLocation(jobType){
+		$("#salaryChartContainer").children().remove();
+		var canvasHtml = '<canvas id="salaryChart" width="300" height="200" style="height: 200px;"></canvas>'
+		$('#salaryChartContainer').append(canvasHtml);
+		$('#jobSalaryModalTitle').text("Average Salary of " + jobType);
+		$('#salaryChartContainer').ploading({action: 'show'});
+		$('#jobSalaryModal').modal('show');
+		$.ajax({
+			type: 'GET',
+			url: '/doAnalysis',
+			data: {
+				analysisType: "1.1",
+				param1: jobType
+			},
+			dataType: "json",
+			success: function(ret) {
+				if (!!ret) {
+					var labelSet = [];
+					var dataSet = [];
+					var bgColors = [];
+					var borderColors = [];
+					
+					var cnt=0;
+					for (key in ret){
+						if (ret[key] == null){
+							continue;
+						}
+						labelSet.push(key);
+						if (!isNaN(ret[key])){
+							ret[key] = ret[key].toFixed(2);
+						}
+						dataSet.push(ret[key]);
+						
+						bgColors.push(chartBgColors[cnt % chartBgColors.length]);
+						borderColors.push(chartBorderColors[cnt % chartBorderColors.length]);
+						cnt++;
+					}
+					
+					var salaryChart = new Chart($("#salaryChart"), {
+					    type: 'bar',
+					    data: {
+					        labels: labelSet,
+					        datasets: [
+					        	{
+						            data: dataSet,
+						            backgroundColor: bgColors,
+						            borderColor: borderColors,
+						            borderWidth: 1
+						        }
+					        ]
+					    },
+					    options: {
+					    	responsiveAnimationDuration: 1200,
+					    	//maintainAspectRatio: false,
+					    	title: {
+					            display: false,
+					            text: 'Relative Job Salaries in This Company'
+					        },
+					        legend: {
+					            display: false,
+					        },
+					        scales: {
+					        	xAxes: [{
+					        		barPercentage: 0.3,
+					        		ticks: {
+					                    //display: false,
+					                    autoSkip: false
+					                }
+					        	}],
+					            yAxes: [{
+					                ticks: {
+					                    beginAtZero:true
+					                }
+					            }]
+					        }
+					    }
+					});
+				}else {
+				}
+			},
+			complete: function (xhr, ts){
+				$('#salaryChartContainer').ploading({action: 'hide'});
+			}
+	    });
+	}
+	
+	function f_drawChart2(){
+		$('#chart2Container').ploading({action: 'show'});
+		$.ajax({
+			type: 'GET',
+			url: '/doAnalysis',
+			data: {
+				analysisType: "2",
+				param1: $("#chart2_select").val()
+			},
+			dataType: "json",
+			success: function(ret) {
+				if (!!ret) {
+					f_doDrawPieChart("chart2", ret);
+				}
+			},
+			complete: function (xhr, ts){
+				$('#chart2Container').ploading({action: 'hide'});
+			}
+	    });
+	}
+	
+	function f_drawChart3(){
+		$('#chart3Container').ploading({action: 'show'});
+		$.ajax({
+			type: 'GET',
+			url: '/doAnalysis',
+			data: {
+				analysisType: "3",
+				param1: $("#chart3_select").val()
+			},
+			dataType: "json",
+			success: function(ret) {
+				if (!!ret) {
+					//f_doDrawPieChart("chart3", ret);
+					$("#chart3Container").children().remove();
+					var canvasHtml = '<canvas id="chart3" width="300" height="150" ></canvas>'
+					$("#chart3Container").append(canvasHtml);
+					
+					f_doDrawBarChart("chart3", ret);
+				}
+			},
+			complete: function (xhr, ts){
+				$('#chart3Container').ploading({action: 'hide'});
+			}
+	    });
+	}
+	
+	function f_drawChart4(){
+		$('#chart4Container').ploading({action: 'show'});
+		$.ajax({
+			type: 'GET',
+			url: '/doAnalysis',
+			data: {
+				analysisType: "4",
+				param1: $("#chart4_select").val()
+			},
+			dataType: "json",
+			success: function(ret) {
+				if (!!ret) {
+					f_doDrawPieChart("chart4", ret, "percentage");
+				}
+			},
+			complete: function (xhr, ts){
+				$('#chart4Container').ploading({action: 'hide'});
+			}
+	    });
+	}
+	
+	function f_drawChart5(){
+		$('#chart5Container').ploading({action: 'show'});
+		$.ajax({
+			type: 'GET',
+			url: '/doAnalysis',
+			data: {
+				analysisType: "5",
+				param1: $("#chart5_select").val()
+			},
+			dataType: "json",
+			success: function(ret) {
+				if (!!ret) {
+					$("#chart5Container").children().remove();
+					var canvasHtml = '<canvas id="chart5" width="300" height="150" ></canvas>'
+					$("#chart5Container").append(canvasHtml);
+					
+					f_doDrawBarChart("chart5", ret);
+				}
+			},
+			complete: function (xhr, ts){
+				$('#chart5Container').ploading({action: 'hide'});
+			}
+	    });
+	}
+	
+	function f_doDrawBarChart(id, ret){
+		var labelSet = [];
+		var dataSet = [];
+		var bgColors = [];
+		var borderColors = [];
+		
+		var cnt=0;
+		for (key in ret){
+			labelSet.push(key);
+			dataSet.push(ret[key]);
+			
+			bgColors.push(chartBgColors[cnt % chartBgColors.length]);
+			borderColors.push(chartBorderColors[cnt % chartBorderColors.length]);
+			cnt++;
+		}
+		new Chart($("#"+id), {
+		    type: 'horizontalBar',
+		    data: {
+		        labels: labelSet,
+		        datasets: [{
+		            data: dataSet,
+		            backgroundColor: bgColors,
+		            borderColor: borderColors,
+		            borderWidth: 1
+		        }]
+		    },
+		    options: {
+		    	title: {
+		            display: false,
+		            text: 'Average Salaries over Job Type'
+		        },
+		        legend: {
+		            display: false,
+		        },
+		    	scales: {
+		        	yAxes: [{
+		        		barPercentage: 0.3,
+		        		ticks: {
+		                    //display: false,
+		                    autoSkip: false
+		                }
+		        	}],
+		            xAxes: [{
+		                ticks: {
+		                    beginAtZero:true
+		                }
+		            }]
+		        },
+		        onClick: function(e, arr) {
+		        	if (arr.length > 0 && id == "chart1"){
+		        		f_showJobTypeSalaryOverLocation(labelSet[arr[0]._index]);
+		        	}
+		        },
+		        responsiveAnimationDuration: 1000,
+		    	//responsive: false
+		    }
+		});	
+	}
+	
+	function f_doDrawPieChart(id, ret, tooltipType){
+		$("#"+id+"Container").children().remove();
+		var canvasHtml = '<canvas id="'+id+'" width="300" height="150" ></canvas>'
+		$("#"+id+"Container").append(canvasHtml);
+		
+		var labelSet = [];
+		var dataSet = [];
+		var bgColors = [];
+		var borderColors = [];
+		
+		var cnt=0;
+		for (key in ret){
+			labelSet.push(key);
+			dataSet.push(ret[key]);
+			
+			bgColors.push(chartBgColors[cnt % chartBgColors.length]);
+			borderColors.push(chartBorderColors[cnt % chartBorderColors.length]);
+			cnt++;
+		}
+		new Chart($("#"+id), {
+		    type: 'doughnut',
+		    data: {
+		        labels: labelSet,
+		        datasets: [{
+		            data: dataSet,
+		            backgroundColor: bgColors,
+		            borderColor: borderColors,
+		            borderWidth: 1
+		        }]
+		    },
+		    options: {
+		    	title: {
+		            display: false,
+		            text: 'IT related job proportion in Vancouver'
+		        },
+		    	legend: {
+		        	position: 'right',
+		            labels: {
+		            	boxWidth: 12
+		            }
+		        },
+		        tooltips: {
+					callbacks: {
+						label: function(tooltipItem, data) {
+							var label = data.labels[tooltipItem.index];
+							var originData = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+							
+							if (tooltipType == "percentage"){
+							    //get the concerned dataset
+							    var dataset = data.datasets[tooltipItem.datasetIndex];
+							    //calculate the total of this data set
+							    var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+							      return previousValue + currentValue;
+							    });
+							    //get the current items value
+							    var currentValue = dataset.data[tooltipItem.index];
+							    //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
+							    var percentage = Math.floor(((currentValue/total) * 100)+0.5);
+								
+							    return label + ": " + percentage + "%";
+							} else {
+								return label + ": " + originData;
+							}
+						}
+					}
+	        	},
+		        responsiveAnimationDuration: 1000
+		    	//responsive: false
+		    }
+		});
+	}
+$(document).ready(f_init);
+</script>
+<body>
+	<header class="header8" id="home">
+	    <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+	        <div class="container">
+	        <div class="navbar-header">
+	            <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle" type="button">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	            </button>
+	            <a href="/index" class="navbar-brand brand"><i class="fab fa-sellsy"></i><span>Dior</span><span>SFU BigData</span></a>
+	        </div>
+	
+	        <div id="navbar-collapse-02" class="collapse navbar-collapse">
+	            <ul class="nav navbar-nav navbar-right">
+	                <li><a class="scroll" href="/index">Home</a></li>
+	                <li><a class="scroll" href="/job">Job</a></li>
+	                <li><a class="scroll" href="/company">Company</a></li>
+	                <li class="active"><a class="scroll" href="/analysis">Analysis</a></li>
+	            </ul>
+	        </div>
+	    </nav>
+	</header>
+	<section id="container" style="margin-top:70px">
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+    <section id="main-content" style="margin-bottom: 80px">
+      <section class="wrapper">
+        <div class="row mt">
+        	<div class="col-md-12">
+        		<div class="content-panel">
+	        		<div class="grey-header">
+						<h5>Average Salaries of IT related Jobs</h5>
+					</div>
+	                <div id="chart1Container" class="panel-body text-center">
+		        		<canvas id="chart1" width="300" height="100"></canvas>
+	        		</div>
+	        	</div>
+        	</div>
+        </div>
+        <div class="row mt">
+        	<div class="col-md-6">
+        		<div class="content-panel">
+        			<div class="grey-header">
+						<h5 style="display:inline-block">Proportion of IT related job in</h5>
+						<select id="chart2_select">
+							<option th:each="city : ${selectedCityList}" th:text="${city}">Vancouver</option>
+						</select>
+					</div>
+	                <div id="chart2Container" class="panel-body text-center">
+	                	<canvas id="chart2" width="300" height="150" ></canvas>
+	        		</div>
+	        	</div>
+        	</div>
+        	<div class="col-md-6">
+        		<div class="content-panel">
+        			<div class="grey-header">
+        				<h5 style="display:inline-block">Job Posting Number of</h5>
+						<select id="chart3_select">
+							<option th:each="jobType : ${selectedJobTypeList}" th:text="${jobType}">Data Science</option>
+						</select>
+					</div>
+	                <div id="chart3Container" class="panel-body text-center">
+	                	<canvas id="chart3" width="300" height="150" ></canvas>
+	        		</div>
+	        	</div>
+        	</div>
+        </div>
+        <div class="row mt">
+        	<div class="col-md-6">
+        		<div class="content-panel">
+        			<div class="grey-header">
+						<h5 style="display:inline-block">Alumni number of</h5>
+						<select id="chart5_select">
+							<option th:each="university : ${selectedUniversityList}" th:text="${university}">Amazon</option>
+						</select>
+					</div>
+	                <div id="chart5Container" class="panel-body text-center">
+	                	<canvas id="chart5" width="300" height="150" ></canvas>
+	        		</div>
+	        	</div>
+        	</div>
+        	<div class="col-md-6">
+        		<div class="content-panel">
+        			<div class="grey-header">
+						<h5 style="display:inline-block">Proportion of Alumni in</h5>
+						<select id="chart4_select">
+							<option th:each="company : ${selectedCompanyList}" th:text="${company}">Amazon</option>
+						</select>
+					</div>
+	                <div id="chart4Container" class="panel-body text-center">
+	                	<canvas id="chart4" width="300" height="150" ></canvas>
+	        		</div>
+	        	</div>
+        	</div>
+        </div>
+      </section>
+    </section>
+    <!-- /MAIN CONTENT -->
+    <!--main content end-->
+    <!--footer start-->
+    <footer class="footer8">
+	    <div class="container">
+	        <div class="col-md-12">
+	            <p class="pull-left small">© Copyright - <a href="#">Mad</a> 2018</p>
+	        	<p class="pull-right small">Made with <i class="fa fa-heart"></i> in SFU Big Data</p>
+	        </div>
+	    </div>
+	</footer>
+    <!--footer end-->
+    <div class="modal fade bs-example-modal-lg" id="jobSalaryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-lg" style="margin-top: 250px" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 id="jobSalaryModalTitle">Average Salary of xxx</h4>
+				</div>
+				<div class="modal-body">
+					<div id="jobSalaryModalContent">
+						<div class="row">
+							<div class="col-md-12">
+								<div id="salaryChartContainer" class="detailed mt">
+									<canvas id="salaryChart" width="400" height="400"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+  </section>
+</body>
+</html>

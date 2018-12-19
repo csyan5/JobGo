@@ -1,0 +1,8 @@
+You can simply use the following URL to locate our website and do the testing.
+-----------------------------------------
+http://nml-cloud-231.cs.sfu.ca:8080
+-----------------------------------------
+
+Or, if you want to compile the project by yourself, you can find all code in the folder "WebServer". Remember to use Maven to manage(import) this project.
+
+Should you have any other questions, please send emails to one of us.

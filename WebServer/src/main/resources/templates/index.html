@@ -1,0 +1,522 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>JobGo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="uikit/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-select.min.css" rel="stylesheet">
+	
+    <!-- Edit CSS -->
+    <link href="css/default.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,900,700,600,300,200" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700" rel="stylesheet">
+    
+    <!--=== Load JS here for greater good ====-->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="uikit/bootstrap/js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-select.min.js"></script>
+	<style>
+		.select-new {
+		      height: 44px;
+		}
+	</style>
+</head>
+<script>
+	function f_init(){
+		$.fn.selectpicker.Constructor.BootstrapVersion = '3';
+		$('select').selectpicker({
+			style: 'select-new',
+			width: 'fit'
+	  	});
+	}
+	
+$(document).ready(f_init);
+</script>
+<body>
+	<header class="header8" id="home">
+	    <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+	        <div class="container">
+	        <div class="navbar-header">
+	            <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle" type="button">
+	                <span class="sr-only">Toggle navigation</span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	            </button>
+	            <a href="#" class="navbar-brand brand"><i class="fab fa-sellsy"></i><span>Dior</span><span>SFU BigData</span></a>
+	        </div>
+	
+	        <div id="navbar-collapse-02" class="collapse navbar-collapse">
+	            <ul class="nav navbar-nav navbar-right">
+	                <li class="active"><a class="scroll" href="/index">Home</a></li>
+	                <li><a class="scroll" href="/job">Job</a></li>
+	                <li><a class="scroll" href="/company">Company</a></li>
+	                <li><a class="scroll" href="/analysis">Analysis</a></li>
+	            </ul>
+	        </div>
+	    </nav>
+	    <div class="intro center-content">
+	        <div class="container" style="height:700px">
+	            <div class="row">
+	                <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
+	                    <div class="searcher text-center"><i class="fas fa-globe-americas"></i></div>
+	                    <p class="tag-line text-center">Road To Your Job</p>
+	                    <h1 class="text-center">[[${appName}]]</h1>
+	                    <form class="login-reg subscribe text-center form-inline" action="/search">
+	                        <div class="row margin-bottom-0">
+	                            <div class="col-md-12 col-sm-12">
+	                                <div class="form-group">
+	                                    <input type="text" name="searchText" class="form-control input-lg" id="exampleInputEmail2" placeholder="Your dream job / company / location">
+	                                    <select name="searchType">
+											<option value="0">Job</option>
+											<option value="1">Company</option>
+										</select>
+	                                </div>
+	                                <div class="btn-group">
+	                                	<!--/*
+	                                	<button type="button" class="btn btn-info dropdown-toggle button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Job <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a href="#">Job</a></li>
+											<li><a href="#">Company</a></li>
+											<li><a href="#">Location</a></li>
+										</ul>
+										*/-->
+	                                	<button type="submit" class="btn btn-info button">Search</button>
+									</div>
+	                            </div>
+	                            <!-- 
+	                            <div class="col-md-12">
+	                                <div class="sign-tag m-auto"><p>Let Us Know When It Luanched | <a href="#">Hire Me!</a></p></div>
+	                            </div>
+	                             -->
+	                        </div>
+	                    </form>
+	                </div>
+	
+	            </div><!-- row -->
+	
+	        </div><!-- intro -->
+	
+	    </div><!-- container -->
+	
+	</header><!-- header -->
+	<section id="feature" class="content-section3">
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-md-4 col-sm-6">
+	                <div class="single-content">
+	                    <i class="fab fa-searchengin"></i>
+	                    <h3>Smart Search</h3>
+	                    <p>
+	                    	Searching jobs based on job titles, company names or locations
+	                    </p>
+	                </div>
+	            </div>
+	            <div class="col-md-4 col-sm-6">
+	                <div class="single-content">
+	                    <i class="fas fa-bolt"></i>
+	                    <h3>Real-time Computing</h3>
+	                    <p>
+	                    	Dynamic calculation of the users' query via Spark and RabbitMQ
+	                    </p>
+	                </div>
+	            </div>
+	            <div class="col-md-4 col-sm-6">
+	                <div class="single-content">
+	                    <i class="fa fa-database"></i>
+	                    <h3>Big Data</h3>
+	                    <p>
+	                    	Multiple data sources with a robust growth capability
+	                    </p>
+	                </div>
+	            </div>
+	            <div class="col-md-4 col-sm-6">
+	                <div class="single-content">
+	                    <i class="far fa-chart-bar"></i>
+	                    <h3>Visualization</h3>
+	                    <p>
+	                    	Visualized graphs to present the comprehensive job analysis
+	                    </p>
+	                </div>
+	            </div>
+	            <div class="col-md-4 col-sm-6">
+	                <div class="single-content">
+	                    <i class="fas fa-user-friends"></i>
+	                    <h3>Know Your Alumni</h3>
+	                    <p>
+	                    	Get connections with the alumni from the interested companies
+	                    </p>
+	                </div>
+	            </div>
+	            <div class="col-md-4 col-sm-6">
+	                <div class="single-content">
+	                    <i class="fas fa-briefcase"></i>
+	                    <h3>Land Your Dream Job</h3>
+	                    <p>
+	                    	Thounsands of job interview, company review and salary provided
+	                    </p>
+	                </div>
+	            </div>
+	        </div><!-- end row -->
+	    </div><!-- end container -->
+	</section>
+	<!-- =================================
+	Portfolio-Section
+	================================== -->
+	<section id="work" class="portfolio3">
+	
+	    <div class="row">
+	        <div class="col-md-12 text-center">
+	            <h1 class="section-title">Powered By</h1>
+	        </div>
+	    </div>
+	
+	    <!-- portfolio-item -->
+	    <div class="row portfolio-content">
+	
+	        <!-- portfolio-item 1 -->
+	        <div class="col-md-2 col-md-offset-1 col-sm-6 col-xs-12 portfolio-item">
+	
+	            <figure class="wow zoomIn" data-wow-delay="700ms" data-wow-duration="1000ms">
+	
+	                <!-- image 1 -->
+	                <img src="images/features/indeed.png" alt="portfolio-1">
+	                <!--img src="http://placehold.it/400x300" alt=""-->
+	
+	                <!-- portfolio icon -->
+	                <figcaption class="text-center">
+	                    <a class="portfolio-icon" href="https://ca.indeed.com/?r=us" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+	                </figcaption>
+	
+	            </figure>
+	
+	        </div>
+	
+	        <!-- portfolio-item 2 -->
+	        <div class="col-md-2 col-sm-6 col-xs-12 portfolio-item">
+	
+	            <figure class="wow zoomIn" data-wow-delay="800ms" data-wow-duration="1000ms">
+	
+	                <!-- image 2 -->
+	                <img src="images/features/glassdoor.jpg" alt="portfolio-2">
+	
+	                <!-- portfolio icon -->
+	                <figcaption class="text-center">
+	                	<a class="portfolio-icon" href="https://www.glassdoor.ca/index.htm" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+	                </figcaption>
+	
+	            </figure>
+	
+	        </div>
+	
+	        <!-- portfolio-item 3 -->
+	        <div class="col-md-2 col-sm-6 col-xs-12 portfolio-item">
+	
+	            <figure class="wow zoomIn" data-wow-delay="900ms" data-wow-duration="1000ms">
+	
+	                <!-- image 3 -->
+	                <img src="images/features/linkedin.png" alt="portfolio-3">
+	
+	                <!-- portfolio icon -->
+	                <figcaption class="text-center">
+	                    <a class="portfolio-icon" href="https://www.linkedin.com/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+	                </figcaption>
+	
+	            </figure>
+	
+	        </div>
+	
+	        <!-- portfolio-item 4 -->
+	        <div class="col-md-2 col-sm-6 col-xs-12 portfolio-item">
+	
+	            <figure class="wow zoomIn" data-wow-delay="1000ms" data-wow-duration="1000ms">
+	
+	                <!-- image 4 -->
+	                <img src="images/features/spark.jpg" alt="portfolio-4">
+	
+	                <!-- portfolio icon -->
+	                <figcaption class="text-center">
+	                    <a class="portfolio-icon" href="https://spark.apache.org" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+	                </figcaption>
+	
+	            </figure>
+	
+	        </div>
+			
+			<!-- portfolio-item 4 -->
+	        <div class="col-md-2 col-sm-6 col-xs-12 portfolio-item">
+	
+	            <figure class="wow zoomIn" data-wow-delay="1000ms" data-wow-duration="1000ms">
+	
+	                <!-- image 4 -->
+	                <img src="images/features/rabbitmq2.jpeg" alt="portfolio-4">
+	
+	                <!-- portfolio icon -->
+	                <figcaption class="text-center">
+	                    <a class="portfolio-icon" href="https://www.rabbitmq.com" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+	                </figcaption>
+	
+	            </figure>
+	
+	        </div>
+	        
+	    </div>
+	
+	    <!-- portfolio-item 5 -->
+	    <div class="row portfolio-content text-center clearfix">
+	
+	        <div class="col-md-2 col-md-offset-1 col-sm-6 col-xs-12 portfolio-item">
+	
+	            <figure class="wow zoomIn" data-wow-delay="1000ms" data-wow-duration="1000ms">
+	
+	                <!-- image 5 -->
+	                <img src="images/features/beautiful-soup.jpg" alt="portfolio-5">
+	
+	                <!-- portfolio icon -->
+	                <figcaption class="text-center">
+	                    <a class="portfolio-icon" href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+	                </figcaption>
+	
+	            </figure>
+	
+	        </div>
+	
+	        <!-- portfolio-item 6 -->
+	        <div class="col-md-2 col-sm-6 col-xs-12 portfolio-item">
+	
+	            <figure class="wow zoomIn" data-wow-delay="900ms" data-wow-duration="1000ms">
+	
+	                <!-- image 6 -->
+	                <img src="images/features/scrapy.png" alt="portfolio-6">
+	
+	                <!-- portfolio icon -->
+	                <figcaption class="text-center">
+	                    <a class="portfolio-icon" href="https://scrapy.org" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+	                </figcaption>
+	
+	            </figure>
+	
+	        </div>
+	
+	        <!-- portfolio-item 7 -->
+	        <div class="col-md-2 col-sm-6 col-xs-12 portfolio-item">
+	
+	            <figure class="wow zoomIn" data-wow-delay="800ms" data-wow-duration="1000ms">
+	
+	                <!-- image 7 -->
+	                <img src="images/features/spring.png" alt="portfolio-7">
+	
+	                <!-- portfolio icon -->
+	                <figcaption class="text-center">
+	                    <a class="portfolio-icon" href="https://spring.io/projects/spring-boot" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+	                </figcaption>
+	
+	            </figure>
+	
+	        </div>
+	
+	        <!-- portfolio-item 8 -->
+	        <div class="col-md-2 col-sm-6 col-xs-12 portfolio-item">
+	
+	            <figure class="wow zoomIn" data-wow-delay="700ms" data-wow-duration="1000ms">
+	
+	                <!-- image 8 -->
+	                <img src="images/features/mysql.png" alt="portfolio-8">
+	
+	                <!-- portfolio icon -->
+	                <figcaption class="text-center">
+	                    <a class="portfolio-icon" href="https://www.mysql.com" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+	                </figcaption>
+	
+	            </figure>
+	
+	        </div>
+	
+			<!-- portfolio-item 8 -->
+	        <div class="col-md-2 col-sm-6 col-xs-12 portfolio-item">
+	
+	            <figure class="wow zoomIn" data-wow-delay="700ms" data-wow-duration="1000ms">
+	
+	                <!-- image 8 -->
+	                <img src="images/features/bootstrap.jpg" alt="portfolio-8">
+	
+	                <!-- portfolio icon -->
+	                <figcaption class="text-center">
+	                    <a class="portfolio-icon" href="https://getbootstrap.com" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+	                </figcaption>
+	
+	            </figure>
+	
+	        </div>
+	    </div>
+	
+	</section>
+	<!-- genius members -->
+	<section id="team" class="team1-1">
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-md-12 text-center">
+	                <h2>Our Members</h2>
+	            </div>
+	            <div class="col-md-3 col-sm-6">
+	                <div class="member text-center">
+	                    <div class="member-overlay">
+	                        <img class="img-responsive" src="images/ironman.jpg" alt="">
+	                        <div class="center-vertically"><i class="fab fa-facebook"></i></div>
+	                    </div>
+	                    <h3>Anton Ma</h3>
+	                    <span>Software Engineer</span>
+	                </div>
+	            </div>
+	            <div class="col-md-3 col-sm-6">
+	                <div class="member text-center">
+	                    <div class="member-overlay">
+	                        <img class="img-responsive" src="images/stranger.jpg" alt="">
+	                        <div class="center-vertically"><i class="fab fa-facebook"></i></div>
+	                    </div>
+	                    <h3>Alen Yan</h3>
+	                    <span>Data Scientist</span>
+	                </div>
+	            </div>
+	            <div class="col-md-3 col-sm-6">
+	                <div class="member text-center">
+	                    <div class="member-overlay">
+	                        <img class="img-responsive" src="images/spider.jpg" alt="">
+	                        <div class="center-vertically"><i class="fab fa-facebook"></i></div>
+	                    </div>
+	                    <h3>Frank Zheng</h3>
+	                    <span>Data Engineer</span>
+	                </div>
+	            </div>
+	            <div class="col-md-3 col-sm-6">
+	                <div class="member text-center">
+	                    <div class="member-overlay">
+	                        <img class="img-responsive" src="images/thor.jpg" alt="">
+	                        <div class="center-vertically"><i class="fab fa-facebook"></i></div>
+	                    </div>
+	                    <h3>Yifan Li</h3>
+	                    <span>Study Dior</span>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</section>
+	<section id="contact" class="contact2"><!-- background pattern -->
+	
+	    <div class="container">
+	
+	        <div class="row">
+	
+	            <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12 text-center">
+	
+	                <!-- section title -->
+	                <h2>Contact With Us</h2>
+	
+	                <!-- big paragraph -->
+	                <p class="big-para">If you have any problem or suggestion, please leave your opinion to help us become better.</p>
+	
+	                <!-- social icons -->
+	                <div class="contact-social-link">
+	
+	                    <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fab fa-facebook fa-2x social-icon"></i></a>
+	
+	                    <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fab fa-twitter fa-2x social-icon"></i></a>
+	
+	                    <a href="#" data-toggle="tooltip" data-placement="top" title="Wechat"><i class="fab fa-weixin fa-2x social-icon"></i></a>
+	
+	                    <a href="#" data-toggle="tooltip" data-placement="top" title="Linkedin"><i class="fab fa-linkedin fa-2x social-icon"></i></a>
+	
+	                    <a href="#" data-toggle="tooltip" data-placement="top" title="Google - Plus"><i class="fab fa-google-plus fa-2x social-icon"></i></a>
+	
+	                </div>
+	
+	            </div>
+	
+	        </div>
+	
+	        <div class="row">
+	
+	            <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12 ">
+	
+	                <!-- contact form -->
+	                <div class="contact-form">
+	
+	                    <form class="clearfix" accept-charset="utf-8" method="get" action="#">
+	
+	                        <div class="row">
+	
+	                            <div class="col-sm-6 form-group wow fadeInDown" data-wow-delay="700ms" data-wow-duration="1000ms">
+	
+	                                <label class="sr-only">Your Name</label>
+	
+	                                <input type="text" placeholder="Your Name" name="name" class="form-control input-lg" required="">
+	
+	                            </div>
+	
+	                            <div class="col-sm-6 form-group wow fadeInDown" data-wow-delay="700ms" data-wow-duration="1000ms">
+	
+	                                <label class="sr-only">Email Address</label>
+	
+	                                <input type="email" placeholder="Your Email" name="email" class="form-control input-lg" required="">
+	
+	                            </div>
+	
+	                        </div>
+	
+	                        <div class="row">
+	
+	                            <div class="col-sm-12 form-group wow fadeInDown" data-wow-delay="900ms" data-wow-duration="1000ms">
+	
+	                                <label class="sr-only">Phone Number</label>
+	
+	                                <input type="tel" placeholder="Phone Number" name="tel" class="form-control input-lg">
+	
+	                            </div>
+	
+	                        </div>
+	
+	                        <div class="row">
+	
+	                            <div class="col-sm-12 form-group wow fadeInDown" data-wow-delay="1000ms" data-wow-duration="1000ms">
+	
+	                                <label class="sr-only" for="message">Write Message</label>
+	
+	                                    <textarea rows="6" name="message" id="message" class="form-control input-lg " placeholder="Write Massage" required=""></textarea>
+	
+	                            </div>
+	
+	                        </div>
+	
+	                        <!-- submit button -->
+	                        <button class="btn btn-success btn-lg btn-block wow fadeInDown" data-wow-delay="1200ms" data-wow-duration="1000ms" type="submit">Send Message</button>
+	
+	                    </form>
+	
+	                </div>
+	
+	            </div>
+	
+	        </div>
+	
+	    </div>
+	
+	</section>
+	<footer class="footer8">
+	    <div class="container">
+	        <div class="col-md-12">
+	            <p class="pull-left small">© Copyright - <a href="#">Mad</a> 2018</p>
+	            <p class="pull-right small">Made with <i class="fa fa-heart"></i> in SFU Big Data</p>
+	        </div>
+	    </div>
+	</footer>
+</body>
+</html>

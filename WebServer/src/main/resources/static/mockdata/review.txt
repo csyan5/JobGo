@@ -1,0 +1,25 @@
+{
+  "data": [
+    {
+      "comp_id": "Amazon",
+      "review_id": "1",
+      "score": "5",
+      "pros": "Work Life Balance and Flexible",
+      "cons": "Work life balance could be better"
+    },
+    {
+      "comp_id": "Amazon",
+      "review_id": "2",
+      "score": "5",
+      "pros": "Working towards a better work-life balance",
+      "cons": "Work/life balance seems comparable to other places I've worked - not worse"
+    },
+    {
+      "comp_id": "Amazon",
+      "review_id": "3",
+      "score": "5",
+      "pros": "Amazon is a wonderful organization to work for because it works with Fortune 500 clients whereby we are always ahead technology and best practices. Companies like Nike, Porsche, Mercedes. Apple are a few of our clients and other partners.Aside from the benefits, discounted purchase options and remarkable engagement groups, the talent is amazing and you will work with many competent people.We have yoga and meditation classes, mindfulness workshops. Many invited guests from technology industries to provides you with information.Leadership women work shops, global coaching, mentoring programs and flexible work environment.It is truly a top notch company that will give back to their employees.No company is perfect but this is prefect for me",
+      "cons": "You are responsible for your career progression, so make it work."
+    }
+  ]
+}

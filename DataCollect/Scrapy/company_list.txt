@@ -1,0 +1,102 @@
+ADGA Group
+AMD	
+ATB Financial
+Accenture
+Amazon
+American Express
+AppDirect
+Apple
+BMO Financial Group
+Bank of America
+Bell Canada
+Best Buy
+Best Buy Canada
+CGI
+CIBC
+Canadian Tire
+Capital One
+Ceridian
+Cisco Systems
+Citco
+Citi
+Cognizant Technology Solutions
+Colliers International
+Costco Wholesale
+Dell	
+Deloitte
+Docker
+EY
+Electronic Arts
+Ericsson-Worldwide
+Exchange Solutions
+Facebook
+FedEx	
+Flipp
+Ford Motor Company
+Frozen Mountain
+GE
+Gameloft
+Gap
+Global Relay
+Google
+HSBC Holdings
+HUB International
+Honeywell
+Hootsuite
+Huawei Technologies
+Hudson's Bay Company
+IBM
+ICBC
+IG Wealth Management
+Insight
+Jacobs
+KPMG
+Loblaw Companies
+Manulife
+Microsoft
+Morgan Stanley
+Morneau Shepell
+NTT DATA
+National Bank of Canada
+NexJ Systems
+Nokia
+Nuance
+Okta
+OpenText
+Oracle
+Paysafe Group
+Procter & Gamble
+PwC
+RBC
+Randstad
+Realtor.com
+SAP
+SMART Technologies
+SUSE
+Salesforce
+Samsung Electronics
+Scotiabank
+Shell
+Shopify
+Siemens
+Simon Fraser University
+Snapchat
+Softchoice	
+Statistics Canada
+Suncor
+TD
+Tata Consultancy Services
+Tesla
+The Coca-Cola Company
+Thomson Reuters
+TransCanada
+TripAdvisor
+Uber
+Ubisoft
+Unbounce
+Unilever
+autoTRADER.ca
+belairdirect
+eBay
+
+

@@ -1,0 +1,25 @@
+{
+  "data": [
+    {
+      "comp_id": "Amazon",
+      "job_id": "1",
+      "interview_id": "1",
+      "date": "2018-09-09",
+      "question": "asked all basic data structure questions, also some class projects I've done in school. Doubly linked-list, hashmap, SQL, primary key, foreign key etc."
+    },
+    {
+      "comp_id": "Amazon",
+      "job_id": "1",
+      "interview_id": "2",
+      "date": "2018-08-08",
+      "question": "How will you build an API for Memory Cache? Choose whichever language you are comfortable with."
+    },
+    {
+      "comp_id": "Amazon",
+      "job_id": "1",
+      "interview_id": "3",
+      "date": "2017-07-07",
+      "question": "What is HashTable? How does it work in the backend perspective? What to do if the collision happened? Whats the time complexity of inserting? deleting? seaching? What's the time complexity for the worse case?"
+    }
+  ]
+}
