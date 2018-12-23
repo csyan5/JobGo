@@ -2,6 +2,9 @@
 
 ## Files Intruduction:
 
+### Report.pdf
+ - Final Report for proejct implementation.
+
 ### Database/
 
  - ER Diagram of our database
